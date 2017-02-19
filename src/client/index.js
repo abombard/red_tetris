@@ -6,7 +6,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux' 
 import {storeStateMiddleWare} from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
-import App from './components/Game'
+import App from './containers/Game'
 
 const store = createStore(
   reducer,

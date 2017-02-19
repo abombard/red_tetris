@@ -3,27 +3,27 @@ import Square from './Square'
 
 const Board = ({ squares, onSquareClick }) => (
   <div>
-    <div className="board-row">
-      <Square value={squares[0]} onClick={() => onSquareClick(0)} />
-      <Square value={squares[1]} onClick={() => onSquareClick(1)} />
-      <Square value={squares[2]} onClick={() => onSquareClick(2)} />
+    <div className='board-row'>
+      <Square onClick={() => onSquareClick(0)} value={squares[0]} />
+      <Square onClick={() => onSquareClick(1)} value={squares[1]} />
+      <Square onClick={() => onSquareClick(2)} value={squares[2]} />
     </div>
-    <div className="board-row">
-      <Square value={squares[3]} onClick={() => onSquareClick(3)} />
-      <Square value={squares[4]} onClick={() => onSquareClick(4)} />
-      <Square value={squares[5]} onClick={() => onSquareClick(5)} />
+    <div className='board-row'>
+      <Square onClick={() => onSquareClick(3)} value={squares[3]} />
+      <Square onClick={() => onSquareClick(4)} value={squares[4]} />
+      <Square onClick={() => onSquareClick(5)} value={squares[5]} />
     </div>
-    <div className="board-row">
-      <Square value={squares[6]} onClick={() => onSquareClick(6)} />
-      <Square value={squares[7]} onClick={() => onSquareClick(7)} />
-      <Square value={squares[8]} onClick={() => onSquareClick(8)} />
+    <div className='board-row'>
+      <Square onClick={() => onSquareClick(6)} value={squares[6]} />
+      <Square onClick={() => onSquareClick(7)} value={squares[7]} />
+      <Square onClick={() => onSquareClick(8)} value={squares[8]} />
     </div>
   </div>
 )
 
 Board.propTypes = {
-  squares: PropTypes.arrayOf(Square).isRequired,
-  onSquareClick: PropTypes.func.isRequired
+  onSquareClick: PropTypes.func.isRequired,
+  squares: PropTypes.arrayOf(PropTypes.instanceOf(Square)).isRequired,
 }
 
 export default Board
