@@ -13,7 +13,7 @@ const store = createStore(
   applyMiddleware(thunk, createLogger())
 )
 
-const socket = io('http://0.0.0.0:3004')
+const socket = io()
 socket.on('action', (action) => {
   if (action.type === 'play') {
     console.log('other player playing')

@@ -5,7 +5,7 @@ const initialState = {
   xIsNext: true,
 }
 
-const socket = io('http://0.0.0.0:3004')
+const socket = io()
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
