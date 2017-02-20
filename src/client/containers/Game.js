@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Board from '../components/Board'
-import Square from '../components/Square'
 import { squareClicked } from '../actions/squareClicked'
 import './TicTacToe.css'
 
@@ -13,7 +12,7 @@ const Game = ({ squares, onSquareClick }) => (
 
 Game.propTypes = {
   onSquareClick: PropTypes.func.isRequired,
-  squares: PropTypes.arrayOf(Square).isRequired,
+  squares: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 const mapStateToProps = (state) => ({
