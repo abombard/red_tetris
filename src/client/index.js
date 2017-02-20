@@ -7,13 +7,13 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import App from './containers/Game'
 import { squareClicked } from './actions/squareClicked'
-var socket = io("http://0.0.0.0:3004");
 
 const store = createStore(
   reducer,
   applyMiddleware(thunk, createLogger())
 )
 
+const socket = io('http://0.0.0.0:3004')
 socket.on('action', (action) => {
   if (action.type === 'play') {
     console.log('other player playing')
@@ -26,5 +26,3 @@ ReactDom.render((
     <App />
   </Provider>
 ), document.getElementById('tetris'))
-
-export default socket
