@@ -39,6 +39,18 @@ const initEngine = (io) => {
   })
 }
 
+const handleGame = (io) => {
+  io.on('connection', (socket) => {
+    loginfo(`Socket connected: ${socket.id}`)
+    socket.on('action', (action) => {
+      if (action.type === 'play') {
+        console.log('action play')
+        io.emit('action', { type: 'play', msg: action.msg })
+      }
+    })
+  })
+}
+
 const http = require('http')
 const Promise = require('promise')
 
@@ -57,6 +69,7 @@ export const create = (params) => {
         cb()
       }
 
+      handleGame(io)
       initEngine(io)
       resolve({ stop })
     })
