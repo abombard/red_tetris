@@ -8,10 +8,9 @@ const initApp = (app, params, cb) => {
   const { host, port } = params
 
   app.on('request', (req, res) => {
-    /*const file = req.url === '/bundle.js' ?
+    const file = req.url === '/bundle.js' ?
         '/../../build/bundle.js' :
-        '/../../index.html'*/
-    const file = '/../../index.html'
+        '/../../index.html'
     fs.readFile(__dirname + file, (err, data) => {
       if (err) {
         logerror(err)
@@ -41,9 +40,10 @@ const initEngine = (io) => {
 }
 
 export const create = (params) => {
+  const Promise = require('promise');
   const promise = new Promise((resolve, reject) => {
     const app = require('http').createServer()
-    initApp(app, params, () =>{
+    initApp(app, params, () => {
       const io = require('socket.io')(app)
       const stop = (cb) => {
         io.close()
@@ -55,7 +55,7 @@ export const create = (params) => {
       }
 
       initEngine(io)
-      resolve({stop})
+      resolve({ stop })
     })
   })
   return promise
