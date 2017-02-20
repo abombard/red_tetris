@@ -39,18 +39,21 @@ const initEngine = (io) => {
   })
 }
 
+const http = require('http')
+const Promise = require('promise')
+
 export const create = (params) => {
-  const Promise = require('promise');
+
   const promise = new Promise((resolve, reject) => {
-    const app = require('http').createServer()
+    const app = http.createServer()
     initApp(app, params, () => {
       const io = require('socket.io')(app)
       const stop = (cb) => {
         io.close()
-        app.close( () => {
+        app.close(() => {
           app.unref()
         })
-        loginfo(`Engine stopped.`)
+        loginfo('Engine stopped.')
         cb()
       }
 

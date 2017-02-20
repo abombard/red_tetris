@@ -8,8 +8,6 @@ import { storeStateMiddleWare } from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
 import App from './containers/Game'
 
-console.log('Hello world');
-
 const store = createStore(
   reducer,
   applyMiddleware(thunk, createLogger())
