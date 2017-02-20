@@ -23,7 +23,7 @@ const Board = ({ squares, onSquareClick }) => (
 
 Board.propTypes = {
   onSquareClick: PropTypes.func.isRequired,
-  squares: PropTypes.arrayOf(PropTypes.instanceOf(Square)).isRequired,
+  squares: PropTypes.arrayOf(Square).isRequired,
 }
 
 export default Board

@@ -93,8 +93,8 @@
     "no-labels": 1, //disallow use of labeled statements
     "no-lone-blocks": 1, //disallow unnecessary nested blocks
     "no-loop-func": 1, //disallow creation of functions within loops
-    "no-magic-numbers": [1, { "ignore": [-1, 0, 1] }], // disallow the use of magic numbers
-    "no-multi-spaces": 1, //disallow use of multiple spaces (fixable)
+    /* "no-magic-numbers": [1, { "ignore": [-1, 0, 1] }], // disallow the use of magic numbers
+    "no-multi-spaces": 1, //disallow use of multiple spaces (fixable) */
     "no-multi-str": 1, //disallow use of multiline strings
     "no-native-reassign": 1, //disallow reassignments of native objects
     "no-new-func": 1, //disallow use of new operator for Function object

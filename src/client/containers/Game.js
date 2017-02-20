@@ -13,7 +13,7 @@ const Game = ({ squares, onSquareClick }) => (
 
 Game.propTypes = {
   onSquareClick: PropTypes.func.isRequired,
-  squares: PropTypes.arrayOf(PropTypes.instanceOf(Square)).isRequired,
+  squares: PropTypes.arrayOf(Square).isRequired,
 }
 
 const mapStateToProps = (state) => ({
