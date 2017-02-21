@@ -25,7 +25,7 @@ const UP = 38
 const DOWN = 40
 const SPACE = 32
 
-//const socket = io()
+const socket = io()
 const handleKey = (ev) => {
   switch (ev.keyCode) {
   case RIGHT:
@@ -34,7 +34,7 @@ const handleKey = (ev) => {
   case DOWN:
   case SPACE:
     console.log(`key ${ev.keyCode}`)
-    //socket.emit('action', { type: 'KEY_PRESS', payload: ev.keyCode })
+    socket.emit('action', { type: 'KEY_PRESS', payload: ev.keyCode })
   default:
     break ;
   }
@@ -42,10 +42,8 @@ const handleKey = (ev) => {
 
 window.addEventListener('keydown', handleKey, false)
 
-/*
 import { GET_MAP, getMap } from './actions/getMap'
 
-const socket = io();
 socket.on('action', (action) => {
   switch (action.type) {
   case GET_MAP:
@@ -56,4 +54,3 @@ socket.on('action', (action) => {
     break ;
   }
 })
-*/
