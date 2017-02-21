@@ -1,2 +1,10 @@
-import squareClicked from './tictactoeState'
-export default squareClicked
+import { combineReducers } from 'redux'
+import lobbyReducer from './lobby'
+import { routerStateReducer } from 'redux-router'
+
+const reducer = combineReducers({
+  router: routerStateReducer,
+  lobby: lobbyReducer,
+})
+
+export default reducer

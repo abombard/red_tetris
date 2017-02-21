@@ -182,7 +182,6 @@
     "no-nested-ternary": 0, //disallow nested ternary expressions
     "no-new-object": 1, //disallow the use of the Object constructor
     "no-restricted-syntax": [1,
-      "BreakStatement",
       "ContinueStatement",
       "DoWhileStatement",
       "DebuggerStatement",

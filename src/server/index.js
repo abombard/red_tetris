@@ -1,5 +1,6 @@
 import fs  from 'fs'
 import debug from 'debug'
+import * as game from './game'
 
 const logerror = debug('tetris:error')
 const loginfo = debug('tetris:info')
@@ -25,17 +26,6 @@ const initApp = (app, params, cb) => {
   app.listen({ host, port }, () => {
     loginfo(`tetris listen on ${params.url}`)
     cb()
-  })
-}
-
-const initEngine = (io) => {
-  io.on('connection', (socket) => {
-    loginfo(`Socket connected: ${socket.id}`)
-    socket.on('action', (action) => {
-      if (action.type === 'server/ping') {
-        socket.emit('action', { type: 'pong' })
-      }
-    })
   })
 }
 
@@ -69,8 +59,7 @@ export const create = (params) => {
         cb()
       }
 
-      handleGame(io)
-      initEngine(io)
+      game.handle(io)
       resolve({ stop })
     })
   })
