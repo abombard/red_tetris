@@ -1,28 +1,25 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Board from '../components/Board'
-import { squareClicked } from '../actions/squareClicked'
-import './TicTacToe.css'
 
-const Game = ({ squares, onSquareClick }) => (
-  <div>
-    <Board onSquareClick={onSquareClick} squares={squares} />
+import Grid from '../components/Grid'
+import './Game.css'
+
+const Game = ({ grid }) => (
+  <div className='body'>
+    <Grid grid={grid} />
   </div>
 )
 
 Game.propTypes = {
-  onSquareClick: PropTypes.func.isRequired,
-  squares: PropTypes.arrayOf(PropTypes.string).isRequired,
+  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  squares: state.squares,
+  grid: state.grid,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  onSquareClick: (id) => {
-    dispatch(squareClicked(id))
-  },
+const mapDispatchToProps = () => ({
+
 })
 
 const App = connect(

@@ -1,2 +1,2 @@
-import squareClicked from './tictactoeState'
-export default squareClicked
+import GridReducer from './GridReducer'
+export default GridReducer

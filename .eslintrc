@@ -259,8 +259,8 @@
     "react/jsx-no-literals": 0, //Prevent usage of unwrapped JSX strings
     "react/jsx-no-undef": 1, //Disallow undeclared variables in JSX
     "react/jsx-pascal-case": 1, // Enforce PascalCase for user-defined JSX components
-    "react/sort-prop-types": 1, //Enforce propTypes declarations alphabetical sorting
-    "react/jsx-sort-props": 1, //Enforce props alphabetical sorting
+    /* "react/sort-prop-types": 1, //Enforce propTypes declarations alphabetical sorting */
+    /* "react/jsx-sort-props": 1, //Enforce props alphabetical sorting */
     "react/jsx-uses-react": 1, //Prevent React to be incorrectly marked as unused
     "react/jsx-uses-vars": 1, //Prevent variables used in JSX to be incorrectly marked as unused
     "react/no-danger": 1, //Prevent usage of dangerous JSX properties
