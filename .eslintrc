@@ -1,4 +1,4 @@
-{
+/*{
   "ecmaFeatures": {
     "arrowFunctions": true,
     "binaryLiterals": false,
@@ -279,4 +279,4 @@
     "react/wrap-multilines": 0 //Prevent missing parentheses around multiline JSX
 
   }
-}
+}*/
