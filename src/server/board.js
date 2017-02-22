@@ -38,7 +38,7 @@ const Board = function() {
   this.update = null
 
   this.move = (x, y) => {
-    if (this.piece.update !== null) {
+    if (this.update !== null) {
       this.piece.rotate()
       this.piece.update = null
     }
