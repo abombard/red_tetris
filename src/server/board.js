@@ -35,6 +35,7 @@ const Board = function() {
   if (this.displayGrid !== null) {
     console.log("first piece placed successfully");
   }
+  this.update = null
 
   this.move = (x, y) => {
     if (this.piece.update !== null) {

@@ -51,7 +51,7 @@ const initPlayer = (socket, player) => {
   socket.on('action', (action) => {
     switch (action.type) {
     case 'KEY_PRESS':
-      player.board.piece.update = action.payload;
+      player.board.update = action.payload;
       break ;
     default:
       console.log(`Unexpected action ${action.type}`)
