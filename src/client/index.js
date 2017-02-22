@@ -44,9 +44,10 @@ window.addEventListener('keydown', handleKey, false)
 
 import { GET_MAP, getMap } from './actions/getMap'
 
+socket.emit('action', { type: 'newplayer', name: 'toto' })
 socket.on('action', (action) => {
   switch (action.type) {
-  case GET_MAP:
+  case 'board':
     store.dispatch(getMap(action.payload))
     break ;
   default:
