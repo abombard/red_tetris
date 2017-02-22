@@ -31,7 +31,7 @@ ReactDom.render((
     <ReduxRouter>
       <Route component={App} path='/'>
         <IndexRoute component={Lobby} onEnter={onEnterLobby} />
-        <Route component={Room} path='/:roomName/:playerName' />
+        <Route component={Room} path='/:roomName[:playerName]' />
       </Route>
     </ReduxRouter>
   </Provider>

@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(reqRefreshRooms())
   },
   onRoomClick: (roomName, playerName) => {
-    dispatch(push({ pathname: `/${roomName}/${playerName}` }))
+    dispatch(push({ pathname: `/${roomName}[${playerName}]` }))
   },
 })
 
