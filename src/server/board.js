@@ -36,23 +36,24 @@ const Board = function() {
     console.log("first piece placed successfully");
   }
 
-  this.moveDown = () => {
+  this.move = (x, y) => {
     if (this.piece.update !== null) {
       this.piece.rotate()
       this.piece.update = null
     }
     const newdisplayGrid = placePiece(
-        this.piece.x,
-        this.piece.y + 1,
+        this.piece.x + x,
+        this.piece.y + y,
         this.grid,
         this.piece.piece
     )
     if (newdisplayGrid !== null) {
       console.log("piece placed successfully")
       this.displayGrid = newdisplayGrid
-      this.piece.y += 1
+      this.piece.y += y
+      this.piece.x += x
     }
-    else {
+    else if (y > 0) {
       console.log('cant go down anymore')
       this.piece = new Piece(this.grid.length / 2, 0)
       this.grid = copyArray(this.displayGrid)
