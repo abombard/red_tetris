@@ -38,13 +38,13 @@ let players = []
 
 
 const startGame = (socket, player) => {
-    socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
+  socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
 }
 
 const handleRot = (socket, player) => {
   socket.on('action', (action) => {
     if (action.type === 'KEY_PRESS') {
-      player.board.rot();
+      player.board.piece.update = action.payload;
     }
   })
 }
@@ -52,8 +52,8 @@ const handleRot = (socket, player) => {
 const mainLoop = (socket, player) => {
   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
     player.board.moveDown(); 
-    console.log(player.board.dispgrid)
-    socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
+    console.log(player.board.displayGrid)
+    socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
       mainLoop(socket, player);             //  ..  again which will trigger another 
   }, 250)
 
