@@ -35,11 +35,12 @@ const Board = function() {
   if (this.displayGrid !== null) {
     console.log("first piece placed successfully");
   }
+  this.update = null
 
   this.move = (x, y) => {
-    if (this.piece.update !== null) {
+    if (this.update !== null) {
       this.piece.rotate()
-      this.piece.update = null
+      this.update = null
     }
     const newdisplayGrid = placePiece(
         this.piece.x + x,
