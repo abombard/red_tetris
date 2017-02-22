@@ -30,25 +30,21 @@ const deleteLine = (grid, yline) => {
   }
   return grid
 }
-  
-const checkIfFull = (grid) => {
 
-    let fullline = true;
-    for (let y = 0; y < grid[0].length; y++) {
-      for (let x = 0; x < grid.length; x++) {
-        if (grid[x][y] === 0)
-          fullline = false
-      }
-      if (fullline === true)
-      {
-        console.log('FOUND A FULL LINE')
-        grid = deleteLine(grid, y);
-      }
-      else
-        fullline = true;
+const checkIfFull = (grid) => {
+  let fullline = true;
+  for (let y = 0; y < grid[0].length; y++) {
+    for (let x = 0; x < grid.length; x++) {
+      if (grid[x][y] === 0)
+        fullline = false
     }
-    return grid
+    if (fullline === true)
+      grid = deleteLine(grid, y);
+    else
+      fullline = true;
   }
+  return grid
+}
 
 const RIGHT = 37
 const LEFT = 39
@@ -131,6 +127,9 @@ const Board = function() {
         this.grid,
         this.piece.piece
       )
+      if (this.displayGrid === null)
+        this.grid = new Array(10).fill(new Array(15).fill(0))
+        this.displayGridgrid = new Array(10).fill(new Array(15).fill(0))
     }
     this.grid = checkIfFull(this.grid) 
   }
