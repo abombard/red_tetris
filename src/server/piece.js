@@ -141,7 +141,7 @@ var Piece = function(x, y)  {
   }
   this.revRotate = () => {
     this.rot = figures[this.id][this.rot - 1] === undefined ?
-      figures[this.id].length : this.rot - 1
+      figures[this.id].length - 1 : this.rot - 1
     this.piece = figures[this.id][this.rot]
   }
 }
