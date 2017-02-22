@@ -75,32 +75,6 @@ const initEngine = (io) => {
   })
 }
 
-
-
-const handleInput = (msg) => {
-  switch (msg) {
-    case 'LEFT':
-    case 'RIGHT':
-    default:
-  }
-}
-
-const receiveInput = (io) => {
-  io.on('connection', (socket) => {
-    loginfo(`Socket connected: ${socket.id}`)
-      socket.on('action', (action) => {
-        if (action.type === 'input') {
-          console.log('input received')
-            handleInput(action.msg)
-        }
-      })
-  })
-}
-
-
-
-
-
 const http = require('http')
 const Promise = require('promise')
 
