@@ -38,13 +38,16 @@ let players = []
 
 
 const startGame = (socket, player) => {
-  console.log(player.board.grid)
-    socket.emit('action', { type : 'board', payload : player.board.grid}) 
+    socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
 }
 
 const mainLoop = (socket, player) => {
-  player.board.moveDown(); 
-  socket.emit('action', { type : 'board', payload : player.board.grid}) 
+  setTimeout(function () {    //  call a 3s setTimeout when the loop is called
+    player.board.moveDown(); 
+    console.log(player.board.dispgrid)
+    socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
+      mainLoop(socket, player);             //  ..  again which will trigger another 
+  }, 1000)
 
 }
 

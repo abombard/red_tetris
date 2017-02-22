@@ -96,6 +96,10 @@ var Piece = function(x, y)  {
       this.id = "I"
       this.rot = 0;
       this.piece = figures[this.id][this.rot];
+    case 5:
+      this.id = "O"
+      this.rot = 0;
+      this.piece = figures[this.id][this.rot];
   }
 
   function rotate() {

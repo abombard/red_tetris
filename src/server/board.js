@@ -6,15 +6,15 @@ function placePiece(xorigpiece, yorigpiece, grid, piece) {
   {
     for (var ypiece = 0; ypiece < piece[0].length; ypiece++)
     {
-      if (piece[xpiece][ypiece] === 1 && grid[xpiece + xorigpiece][ypiece + yorigpiece] === 1)
+      if ((xpiece + xorigpiece >= grid.length || ypiece + yorigpiece >= grid[0].length) || (piece[xpiece][ypiece] === 1 && grid[xpiece + xorigpiece][ypiece + yorigpiece] === 1))
       {
-        console.log('returning null')
-          return null; 
+        console.log('returning null');
+        return null; 
       }
       else if (piece[xpiece][ypiece] === 1) 
       {
-        console.log('OKAYYYY')
-          grid[xpiece + grid.length / 2][ypiece] = 1;
+        console.log('OKAYYYY');
+        grid[xorigpiece + xpiece][yorigpiece + ypiece] = 1;
       }
     }
   }
@@ -30,31 +30,36 @@ function initBoard() {
   return arr
 }
 
+
 var Board = function() {
   this.grid = initBoard();
   this.piece = new Piece(this.grid.length/2, 0);
-  var tmpArr = placePiece(this.piece.x, this.piece.y, this.grid.slice(), this.piece.piece);
-  if (tmpArr !== null)
+  this.dispgrid = placePiece(this.piece.x, this.piece.y,  JSON.parse(JSON.stringify(this.grid)) , this.piece.piece);
+  if (this.dispgrid !== null)
   {
     console.log("first piece placed successfully");
-    this.grid = tmpArr;
   }
 
 
+
+
+
   this.moveDown = function() {
-    var tmpArr = placePiece(this.piece.x, this.piece.y + 1, this.grid.slice(), this.piece.piece);
-    if (tmpArr !== null)
+    this.newdispgrid = placePiece(this.piece.x, this.piece.y + 1, JSON.parse(JSON.stringify(this.grid)), this.piece.piece);
+    if (this.newdispgrid !== null)
     {
-      console.log("first piece placed successfully");
-      this.grid = tmpArr;
+      this.dispgrid = JSON.parse(JSON.stringify(this.newdispgrid));
+      console.log("piece placed successfully");
       this.piece.y += 1;
     }
     else
     {
+      console.log('cant go down anymore')
       this.piece = new Piece(this.grid.length/2, 0);
+      this.grid = JSON.parse(JSON.stringify(this.dispgrid))
+      this.dispgrid = placePiece(this.piece.x, this.piece.y, JSON.parse(JSON.stringify(this.grid)), this.piece.piece);
     }
   }
-
 }
 
 module.exports = Board;
