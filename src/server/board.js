@@ -23,8 +23,8 @@ const placePiece = (x0, y0, grid, piece) => {
 }
 
 const deleteLine = (grid, yline) => {
-  for (let y = yline; y < 1; y--) {
-    for (let x = 0; x < piece.length; x++) {
+  for (let y = yline; y > 1; y--) {
+    for (let x = 0; x < grid.length; x++) {
       grid[x][y] = grid[x][y-1]
     }
   }
@@ -45,7 +45,7 @@ const checkIfFull = (grid) => {
         grid = deleteLine(grid, y);
       }
       else
-        fullline = false;
+        fullline = true;
     }
     return grid
   }
