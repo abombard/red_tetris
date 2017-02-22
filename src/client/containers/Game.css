@@ -9,7 +9,7 @@
 
 .Grid {
 	border: 3px solid #fff;
-	width: 60%;
+	width: 50vh;
 	display: flex;
 	height: 90vh;
 	margin: 5vh auto;
