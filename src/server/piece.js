@@ -139,6 +139,11 @@ var Piece = function(x, y)  {
     this.rot = figures[this.id][this.rot + 1] === undefined ? 0 : this.rot + 1
     this.piece = figures[this.id][this.rot]
   }
+  this.revRotate = () => {
+    this.rot = figures[this.id][this.rot - 1] === undefined ?
+      figures[this.id].length : this.rot - 1
+    this.piece = figures[this.id][this.rot]
+  }
 }
 
 module.exports = Piece;

@@ -43,6 +43,22 @@ const Board = function() {
   }
   this.update = null
 
+  this.rotatePiece = () => {
+    this.piece.rotate()
+    const newGrid = placePiece(
+        this.piece.x,
+        this.piece.y,
+        this.grid,
+        this.piece.piece
+    )
+    if (newGrid !== null) {
+      this.displayGrid = newGrid
+    }
+    else {
+      this.piece.revRotate()
+    }
+  }
+
   this.move = (x, y) => {
 
     const update = this.update
@@ -61,7 +77,7 @@ const Board = function() {
           break
         case UP:
         case SPACE:
-          this.piece.rotate()
+          this.rotatePiece()
           break
       }
     }
