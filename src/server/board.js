@@ -9,7 +9,7 @@ const placePiece = (x0, y0, grid, piece) => {
 
   for (let x = 0; x < piece.length; x++) {
     for (let y = 0; y < piece[0].length; y++) {
-      if ((x + x0 >= newGrid.length || y + y0 >= newGrid[0].length) ||
+      if ((x + x0 >= newGrid.length || x + x0 < 0 || y + y0 < 0 || y + y0 >= newGrid[0].length) ||
           (piece[x][y] === 1 && newGrid[x + x0][y + y0] === 1)) {
         console.log('returning null');
         return null; 
