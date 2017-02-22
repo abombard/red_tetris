@@ -46,14 +46,12 @@ const checkIfFull = (grid) => {
   return grid
 }
 
-const RIGHT = 37
-const LEFT = 39
-const UP = 38
-const DOWN = 40
-const SPACE = 32
+const emptyGrid = () => (
+  new Array(10).fill(new Array(20).fill(0))
+)
 
 const Board = function() {
-  this.grid = new Array(10).fill(new Array(15).fill(0))
+  this.grid = emptyGrid()
   this.piece = new Piece(this.grid.length / 2, 0)
   this.displayGrid = placePiece(
     this.piece.x,
@@ -84,27 +82,6 @@ const Board = function() {
 
   this.move = (x, y) => {
 
-    const update = this.update
-    this.update = null
-
-    if (update !== null) {
-      switch (update) {
-        case LEFT:
-          this.move(1, 0)
-          break
-        case RIGHT:
-          this.move(-1, 0)
-          break
-        case DOWN:
-          this.move(0, 1)
-          break
-        case UP:
-        case SPACE:
-          this.rotatePiece()
-          break
-      }
-    }
-
     const newdisplayGrid = placePiece(
       this.piece.x + x,
       this.piece.y + y,
@@ -128,8 +105,8 @@ const Board = function() {
         this.piece.piece
       )
       if (this.displayGrid === null)
-        this.grid = new Array(10).fill(new Array(15).fill(0))
-        this.displayGridgrid = new Array(10).fill(new Array(15).fill(0))
+        this.grid = emptyGrid()
+        this.displayGridgrid = emptyGrid()
     }
     this.grid = checkIfFull(this.grid) 
   }

@@ -36,34 +36,6 @@ const initApp = (app, params, cb) => {
 
 let players = [] 
 
-const playerLoop = (socket, player) => {
-  setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-    player.board.move(0, 1); 
-    console.log(player.board.displayGrid)
-    socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
-      playerLoop(socket, player);             //  ..  again which will trigger another 
-  }, 250)
-}
-
-const initPlayer = (socket, player) => {
-  socket.emit('action', { type : 'board', payload : player.board.displayGrid }) 
-
-  socket.on('action', (action) => {
-    switch (action.type) {
-    case 'KEY_PRESS':
-      player.board.update = action.payload;
-      break ;
-    default:
-      console.log(`Unexpected action ${action.type}`)
-      break ;
-    }
-  })
-
-  playerLoop(socket, player)
-
-  players.push(player)
-}
-
 const initEngine = (io) => {
   io.on('connection', (socket) => {
     loginfo(`Socket connected: ${socket.id}`)
@@ -71,8 +43,9 @@ const initEngine = (io) => {
         console.log(`New action ${action.type}`)
         switch (action.type) {
         case 'newplayer':
-          var player = new Player(socket.id, action.name)
-          initPlayer(socket, player)
+          const player = new Player(socket, action.name)
+          player.loop()
+          players.push(player)
           break ;
         default:
           console.log(`Unexpected action ${action.type}`)

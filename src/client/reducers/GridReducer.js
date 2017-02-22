@@ -1,7 +1,7 @@
 import { GET_MAP } from '../actions/getMap'
 
 const initialState = {
-  grid: Array(10).fill(Array(15).fill(0)),
+  grid: Array(10).fill(Array(20).fill(0)),
 }
 
 const reducer = (state = initialState, action) => {
