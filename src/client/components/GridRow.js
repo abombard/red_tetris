@@ -12,7 +12,7 @@ const GridRow = ({ row }) => (
 )
 
 GridRow.propTypes = {
-  row: PropTypes.arrayOf(PropTypes.string).isRequired,
+  row: PropTypes.arrayOf(PropTypes.number).isRequired,
 }
 
 export default GridRow

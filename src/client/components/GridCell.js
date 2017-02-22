@@ -1,11 +1,18 @@
 import React, { PropTypes } from 'react'
 
+const colorMap = [
+  'blank',
+  'blue',
+  'green',
+  'pink'
+]
+
 const GridCell = ({ color }) => (
-  <div className={`GridCell ${color}`} />
+  <div className={`GridCell ${colorMap[color]}`} />
 )
 
 GridCell.propTypes = {
-  color: PropTypes.string.isRequired,
+  color: PropTypes.number.isRequired,
 }
 
 export default GridCell

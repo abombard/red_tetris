@@ -12,7 +12,7 @@ const Grid = ({ grid }) => (
 )
 
 Grid.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
 }
 
 export default Grid
