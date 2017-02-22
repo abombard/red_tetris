@@ -51,7 +51,6 @@ const handleRot = (socket, player) => {
 
 const mainLoop = (socket, player) => {
   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-    handleRot(socket, player);
     player.board.moveDown(); 
     console.log(player.board.dispgrid)
     socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
@@ -69,6 +68,7 @@ const initEngine = (io) => {
             var player = new Player(socket.id, action.name)
             players.push(player)
             startGame(socket, player)
+            handleRot(socket, player);
             mainLoop(socket, player)
         }
       })
