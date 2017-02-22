@@ -23,6 +23,12 @@ const placePiece = (x0, y0, grid, piece) => {
   return newGrid;
 }
 
+const RIGHT = 37
+const LEFT = 39
+const UP = 38
+const DOWN = 40
+const SPACE = 32
+
 const Board = function() {
   this.grid = new Array(10).fill(new Array(15).fill(0))
   this.piece = new Piece(this.grid.length / 2, 0)
@@ -38,10 +44,28 @@ const Board = function() {
   this.update = null
 
   this.move = (x, y) => {
-    if (this.update !== null) {
-      this.piece.rotate()
-      this.update = null
+
+    const update = this.update
+    this.update = null
+
+    if (update !== null) {
+      switch (update) {
+        case LEFT:
+          this.move(1, 0)
+          break
+        case RIGHT:
+          this.move(-1, 0)
+          break
+        case DOWN:
+          this.move(0, 1)
+          break
+        case UP:
+        case SPACE:
+          this.piece.rotate()
+          break
+      }
     }
+
     const newdisplayGrid = placePiece(
         this.piece.x + x,
         this.piece.y + y,
