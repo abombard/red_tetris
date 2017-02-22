@@ -10,12 +10,12 @@ const placePiece = (x0, y0, grid, piece) => {
   for (let x = 0; x < piece.length; x++) {
     for (let y = 0; y < piece[0].length; y++) {
       if ((x + x0 >= newGrid.length || x + x0 < 0 || y + y0 < 0 || y + y0 >= newGrid[0].length) ||
-        (piece[x][y] === 1 && newGrid[x + x0][y + y0] === 1)) {
+        (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0)) {
         console.log('returning null');
         return null; 
       }
-      else if (piece[x][y] === 1) {
-        newGrid[x0 + x][y0 + y] = 1;
+      else if (piece[x][y] !== 0) {
+        newGrid[x0 + x][y0 + y] = piece[x][y];
       }
     }
   }
