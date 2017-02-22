@@ -47,7 +47,7 @@ const mainLoop = (socket, player) => {
     console.log(player.board.dispgrid)
     socket.emit('action', { type : 'board', payload : player.board.dispgrid}) 
       mainLoop(socket, player);             //  ..  again which will trigger another 
-  }, 1000)
+  }, 250)
 
 }
 
