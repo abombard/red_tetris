@@ -60,6 +60,9 @@ var Board = function() {
       this.dispgrid = placePiece(this.piece.x, this.piece.y, JSON.parse(JSON.stringify(this.grid)), this.piece.piece);
     }
   }
+  this.rot = function() {
+    this.piece.rotate();
+  }
 }
 
 module.exports = Board;

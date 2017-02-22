@@ -82,36 +82,32 @@ var Piece = function(x, y)  {
   switch (rand) {
     case 1:
       this.id = "L";
-      this.rot = 0;
-      this.piece = figures[this.id][this.rot];
+      break;
     case 2:
       this.id = "Z"
-      this.rot = 0;
-      this.piece = figures[this.id][this.rot];
+      break;
     case 3:
       this.id = "T"
-      this.rot = 0;
-      this.piece = figures[this.id][this.rot];
+      break;
     case 4:
       this.id = "I"
-      this.rot = 0;
-      this.piece = figures[this.id][this.rot];
+      break;
     case 5:
       this.id = "O"
+  }
       this.rot = 0;
       this.piece = figures[this.id][this.rot];
-  }
 
-  function rotate() {
+  this.rotate = function() {
     if (figures[this.id][this.rot + 1] === undefined)
     {
       this.rot = 0;
-      this.piece = [this.id][this.rot]
+      this.piece = figures[this.id][this.rot]
     }
     else
     {
       this.rot += 1;
-      this.piece = [this.id][this.rot]
+      this.piece = figures[this.id][this.rot]
     }
     
   }
