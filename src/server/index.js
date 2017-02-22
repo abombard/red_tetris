@@ -38,7 +38,7 @@ let players = []
 
 const playerLoop = (socket, player) => {
   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
-    player.board.moveDown(); 
+    player.board.move(0, 1); 
     console.log(player.board.displayGrid)
     socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
       playerLoop(socket, player);             //  ..  again which will trigger another 

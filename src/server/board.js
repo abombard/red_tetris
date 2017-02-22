@@ -40,7 +40,7 @@ const Board = function() {
   this.move = (x, y) => {
     if (this.update !== null) {
       this.piece.rotate()
-      this.piece.update = null
+      this.update = null
     }
     const newdisplayGrid = placePiece(
         this.piece.x + x,
