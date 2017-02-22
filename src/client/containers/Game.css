@@ -1,7 +1,8 @@
 .blank { background-color: #fff; }
 .blue { background-color: #0000ff; }
 .green { background-color: #006400; }
-.red { background-color: #dc143c; }
+.red { background-color: #ff0000; }
+.yellow { background-color: #ffff00; }
 
 * { box-sizing: border-box }
 
