@@ -2,7 +2,10 @@
 .blue { background-color: #0000ff; }
 .green { background-color: #006400; }
 .red { background-color: #ff0000; }
-.yellow { background-color: #ffff00; }
+.yellow { background-color: #ffa500; }
+.magenta { background-color: #ff00ff; }
+.brown { background-color: #8b4513; }
+.grey { background-color: #a9a9a9; }
 
 * { box-sizing: border-box }
 

@@ -6,6 +6,9 @@ const colorMap = [
   'green',
   'red',
   'yellow',
+  'magenta',
+  'brown',
+  'grey',
 ]
 
 const GridCell = ({ color }) => (
