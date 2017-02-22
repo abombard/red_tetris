@@ -19,57 +19,64 @@ const initApp = (app, params, cb) => {
         fs.readFile(__dirname + file, (err, data) => {
           if (err) {
             logerror(err)
-              res.writeHead(500)
-              return res.end('Error loading index.html')
+            res.writeHead(500)
+            return res.end('Error loading index.html')
           }
           res.writeHead(200)
-            res.end(data)
+          res.end(data)
         })
     })
 
   app.listen({ host, port }, () => {
     loginfo(`tetris listen on ${params.url}`)
-      cb()
+    cb()
   })
 }
 
 
 let players = [] 
 
-
-const startGame = (socket, player) => {
-  socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
-}
-
-const handleRot = (socket, player) => {
-  socket.on('action', (action) => {
-    if (action.type === 'KEY_PRESS') {
-      player.board.piece.update = action.payload;
-    }
-  })
-}
-
-const mainLoop = (socket, player) => {
+const playerLoop = (socket, player) => {
   setTimeout(function () {    //  call a 3s setTimeout when the loop is called
     player.board.moveDown(); 
     console.log(player.board.displayGrid)
     socket.emit('action', { type : 'board', payload : player.board.displayGrid}) 
-      mainLoop(socket, player);             //  ..  again which will trigger another 
+      playerLoop(socket, player);             //  ..  again which will trigger another 
   }, 250)
+}
 
+const initPlayer = (socket, player) => {
+  socket.emit('action', { type : 'board', payload : player.board.displayGrid }) 
+
+  socket.on('action', (action) => {
+    switch (action.type) {
+    case 'KEY_PRESS':
+      player.board.piece.update = action.payload;
+      break ;
+    default:
+      console.log(`Unexpected action ${action.type}`)
+      break ;
+    }
+  })
+
+  playerLoop(socket, player)
+
+  players.push(player)
 }
 
 const initEngine = (io) => {
   io.on('connection', (socket) => {
     loginfo(`Socket connected: ${socket.id}`)
       socket.on('action', (action) => {
-        if (action.type === 'newplayer') {
-          console.log("NEW PLAYER INC")
-            var player = new Player(socket.id, action.name)
-            players.push(player)
-            startGame(socket, player)
-            handleRot(socket, player);
-            mainLoop(socket, player)
+        console.log(`New action ${action.type}`)
+        switch (action.type) {
+        case 'newplayer':
+          var player = new Player(socket.id, action.name)
+          initPlayer(socket, player)
+          break ;
+        default:
+          console.log(`Unexpected action ${action.type}`)
+          break ;
         }
       })
   })
@@ -84,19 +91,20 @@ export const create = (params) => {
     const app = http.createServer()
       initApp(app, params, () => {
         const io = require('socket.io')(app)
-          const stop = (cb) => {
-            io.close()
-              app.close(() => {
-                app.unref()
-              })
-            loginfo('Engine stopped.')
-              cb()
-          }
+        const stop = (cb) => {
+          io.close()
+          app.close(() => {
+            app.unref()
+          })
+          loginfo('Engine stopped.')
+          cb()
+        }
 
         //  handleGame(io)
         initEngine(io)
-          resolve({ stop })
+        resolve({ stop })
       })
   })
+
   return promise
 }
