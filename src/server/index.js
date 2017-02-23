@@ -34,22 +34,28 @@ const initApp = (app, params, cb) => {
 }
 
 
-let players = [] 
+let players = {}
 
 const initEngine = (io) => {
   io.on('connection', (socket) => {
     loginfo(`Socket connected: ${socket.id}`)
+
+    socket.on('disconnect', () => {
+      clearInterval(players[socket.id].loopID)
+      delete players[socket.id]
+    })
+
       socket.on('action', (action) => {
         console.log(`New action ${action.type}`)
         switch (action.type) {
         case 'newplayer':
           const player = new Player(socket, action.name)
           player.loop()
-          players.push(player)
-          break ;
+          players[socket.id] = player
+          break
         default:
           console.log(`Unexpected action ${action.type}`)
-          break ;
+          break
         }
       })
   })

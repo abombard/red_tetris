@@ -27,7 +27,7 @@ var Player = function(socket, name) {
   this.loopCount = 0
 
   this.loop = () => {
-    setTimeout(() => {    //  call a 3s setTimeout when the loop is called
+    this.loopID = setInterval(() => {    //  call a 3s setTimeout when the loop is called
       this.loopCount ++
 
       if (this.board.update !== null) {
@@ -59,9 +59,8 @@ var Player = function(socket, name) {
         this.loopCount = 0
       }
 
-      console.log(this.board.displayGrid)
+      //console.log(this.board.displayGrid)
       this.socket.emit('action', { type : 'board', payload : this.board.displayGrid })
-      this.loop();             //  ..  again which will trigger another 
     }, 250)
   }
 
