@@ -1,13 +1,9 @@
 import fs  from 'fs'
 import debug from 'debug'
+import * as game from './game'
 
 const logerror = debug('tetris:error')
 const loginfo = debug('tetris:info')
-
-var Player = require('./player');
-var Board = require('./board');
-var Piece = require('./piece');
-
 
 const initApp = (app, params, cb) => {
   const { host, port } = params
@@ -33,34 +29,6 @@ const initApp = (app, params, cb) => {
   })
 }
 
-
-let players = {}
-
-const initEngine = (io) => {
-  io.on('connection', (socket) => {
-    loginfo(`Socket connected: ${socket.id}`)
-
-    socket.on('disconnect', () => {
-      clearInterval(players[socket.id].loopID)
-      delete players[socket.id]
-    })
-
-      socket.on('action', (action) => {
-        console.log(`New action ${action.type}`)
-        switch (action.type) {
-        case 'newplayer':
-          const player = new Player(socket, action.name)
-          player.loop()
-          players[socket.id] = player
-          break
-        default:
-          console.log(`Unexpected action ${action.type}`)
-          break
-        }
-      })
-  })
-}
-
 const http = require('http')
 const Promise = require('promise')
 
@@ -79,10 +47,9 @@ export const create = (params) => {
           cb()
         }
 
-        //  handleGame(io)
-        initEngine(io)
-        resolve({ stop })
-      })
+      game.handle(io)
+      resolve({ stop })
+    })
   })
 
   return promise

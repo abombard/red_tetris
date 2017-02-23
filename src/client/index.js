@@ -1,57 +1,55 @@
 import React from 'react'
 import ReactDom from 'react-dom'
+import { Route, IndexRoute } from 'react-router'
+import { compose, createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
-import thunk from 'redux-thunk'
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import { reduxReactRouter, ReduxRouter } from 'redux-router'
+import { createHistory } from 'history';
+import { reqRefreshRooms } from './actions'
+import tetrisMiddleware, { listen } from './middleware/redTetrisMiddleware'
 import reducer from './reducers'
-import App from './containers/Game'
+import inputHandler from './inputHandler'
 
-const store = createStore(
-  reducer,
-  applyMiddleware(thunk, createLogger())
-)
+import App from './components/App'
+import Lobby from './components/Lobby'
+import Room from './components/Room'
+
+const socket = io()
+
+const store = compose(
+  applyMiddleware(tetrisMiddleware(socket), createLogger()),
+  reduxReactRouter({ createHistory })
+)(createStore)(reducer)
+
+listen(store, socket)
+
+window.addEventListener('keydown', inputHandler(socket), false)
+
+const onEnterLobby = () => {
+  store.dispatch(reqRefreshRooms())
+}
+
+const onEnterRoom = () => {
+  socket.emit('action', {
+    type: 'newplayer',
+    name: store.getState().router.params.playerName,
+  })
+}
+
+const onLeaveRoom = () => {
+  socket.emit('room', {
+    type: 'LEAVE_ROOM',
+  })
+}
 
 ReactDom.render((
   <Provider store={store}>
-    <App />
+    <ReduxRouter>
+      <Route component={App} path='/'>
+        <IndexRoute component={Lobby} onEnter={onEnterLobby} />
+        <Route component={Room} onEnter={onEnterRoom} onLeave={onLeaveRoom} path='/:roomName[:playerName]' />
+      </Route>
+    </ReduxRouter>
   </Provider>
 ), document.getElementById('tetris'))
-
-
-const RIGHT = 37
-const LEFT = 39
-const UP = 38
-const DOWN = 40
-const SPACE = 32
-
-const socket = io()
-const handleKey = (ev) => {
-  switch (ev.keyCode) {
-  case RIGHT:
-  case LEFT:
-  case UP:
-  case DOWN:
-  case SPACE:
-    console.log(`key ${ev.keyCode}`)
-    socket.emit('action', { type: 'KEY_PRESS', payload: ev.keyCode })
-  default:
-    break ;
-  }
-}
-
-window.addEventListener('keydown', handleKey, false)
-
-import { GET_MAP, getMap } from './actions/getMap'
-
-socket.emit('action', { type: 'newplayer', name: 'toto' })
-socket.on('action', (action) => {
-  switch (action.type) {
-  case 'board':
-    store.dispatch(getMap(action.payload))
-    break ;
-  default:
-    console.log(`Unexpected action ${action.type}`)
-    break ;
-  }
-})

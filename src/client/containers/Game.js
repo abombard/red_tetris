@@ -1,30 +1,17 @@
-import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-
-import Grid from '../components/Grid'
-import './Game.css'
-
-const Game = ({ grid }) => (
-  <div className='body'>
-    <Grid grid={grid} />
-  </div>
-)
-
-Game.propTypes = {
-  grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-}
+import Game from '../components/Game'
 
 const mapStateToProps = (state) => ({
-  grid: state.grid,
+  grid: state.grid.grid,
 })
 
 const mapDispatchToProps = () => ({
 
 })
 
-const App = connect(
+const GameContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Game)
 
-export default App
+export default GameContainer

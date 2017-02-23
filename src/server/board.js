@@ -12,7 +12,7 @@ const placePiece = (x0, y0, grid, piece) => {
       if ((x + x0 >= newGrid.length || x + x0 < 0 || y + y0 < 0 || y + y0 >= newGrid[0].length) ||
         (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0)) {
         console.log('returning null');
-        return null; 
+        return null;
       }
       else if (piece[x][y] !== 0) {
         newGrid[x0 + x][y0 + y] = piece[x][y];
@@ -110,7 +110,7 @@ const Board = function() {
         this.piece = new Piece(this.grid.length / 2, 0)
       }
     }
-    this.grid = checkIfFull(this.grid) 
+    this.grid = checkIfFull(this.grid)
   }
 
 }
