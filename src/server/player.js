@@ -27,10 +27,19 @@ var Player = function(socket, name) {
     }
   })
 
-  this.loopCount = 0
-
   this.loop = () => {
-    this.loopID = setInterval(() => {    //  call a 3s setTimeout when the loop is called
+
+    this.dropSpeed = 500
+    let dropDownCallback = () => {
+      setTimeout(() => {
+        this.board.move(0, 1);
+        dropDownCallback()
+      }, this.dropSpeed)
+    }
+    dropDownCallback()
+
+    let previousBoard = this.board.displayGrid
+    this.loopID = setInterval(() => {
       this.loopCount ++
 
       if (this.board.update !== null) {
@@ -57,17 +66,17 @@ var Player = function(socket, name) {
         }
       }
 
-      if (this.loopCount == 2) {
-        this.board.move(0, 1); 
-        this.loopCount = 0
+      //console.log(this.board.displayGrid)
+      if (this.board.displayGrid != previousBoard) {
+        console.log('different board, need update')
+        this.socket.emit('game', {
+          type : 'BOARD_UPDATE',
+          payload : this.board.displayGrid
+        })
       }
 
-      //console.log(this.board.displayGrid)
-      this.socket.emit('game', {
-        type : 'BOARD_UPDATE',
-        payload : this.board.displayGrid
-      })
-    }, 250)
+      previousBoard = this.board.displayGrid
+    }, 16) // 60 tickrate (should be enough for tetris kek)
   }
 
 }
