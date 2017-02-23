@@ -30,10 +30,10 @@ const onEnterLobby = () => {
   store.dispatch(reqRefreshRooms())
 }
 
-const onEnterRoom = () => {
+const onEnterRoom = (nextState) => {
   socket.emit('room', {
     type: 'JOIN_ROOM',
-    name: store.getState().router.params.playerName,
+    name: nextState.params.playerName,
   })
 }
 
