@@ -13,7 +13,10 @@ const inputHandler = (socket) => (
       case DOWN:
       case SPACE:
         console.log(`key ${ev.keyCode}`)
-        socket.emit('action', { type: 'KEY_PRESS', payload: ev.keyCode })
+        socket.emit('game', {
+          type: 'KEY_PRESS',
+          payload: ev.keyCode
+        })
       default:
         break
     }

@@ -31,8 +31,8 @@ const onEnterLobby = () => {
 }
 
 const onEnterRoom = () => {
-  socket.emit('action', {
-    type: 'newplayer',
+  socket.emit('room', {
+    type: 'JOIN_ROOM',
     name: store.getState().router.params.playerName,
   })
 }

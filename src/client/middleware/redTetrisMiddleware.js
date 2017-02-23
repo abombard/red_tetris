@@ -12,13 +12,13 @@ export const listen = (store, socket) => {
     }
   })
 
-  socket.on('action', (action) => {
-    switch (action.type) {
-    case 'board':
-      store.dispatch(getMap(action.payload))
+  socket.on('game', (data) => {
+    switch (data.type) {
+    case 'BOARD_UPDATE':
+      store.dispatch(getMap(data.payload))
       break ;
     default:
-      console.log(`Unexpected action ${action.type}`)
+      console.log(`Unexpected action ${data.type}`)
       break ;
     }
   })

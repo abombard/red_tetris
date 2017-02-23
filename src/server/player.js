@@ -11,12 +11,15 @@ var Player = function(socket, name) {
   this.name = name
   this.board = new Board()
 
-  this.socket.emit('action', { type : 'board', payload : this.board.displayGrid }) 
+  this.socket.emit('game', {
+    type : 'BOARD_UPDATE',
+    payload : this.board.displayGrid
+  })
 
-  this.socket.on('action', (action) => {
-    switch (action.type) {
+  this.socket.on('game', (data) => {
+    switch (data.type) {
     case 'KEY_PRESS':
-      this.board.update = action.payload;
+      this.board.update = data.payload;
       break ;
     default:
       console.log(`Unexpected action ${action.type}`)
@@ -60,7 +63,10 @@ var Player = function(socket, name) {
       }
 
       //console.log(this.board.displayGrid)
-      this.socket.emit('action', { type : 'board', payload : this.board.displayGrid })
+      this.socket.emit('game', {
+        type : 'BOARD_UPDATE',
+        payload : this.board.displayGrid
+      })
     }, 250)
   }
 
