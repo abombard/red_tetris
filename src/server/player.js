@@ -13,7 +13,11 @@ var Player = function(socket, name) {
 
   this.socket.emit('game', {
     type : 'BOARD_UPDATE',
-    payload : this.board.displayGrid
+    payload :
+    {
+      displayGrid: this.board.displayGrid,
+      nextPiece: this.board.nextPiece.id
+    }
   })
 
   this.socket.on('game', (data) => {
@@ -71,7 +75,10 @@ var Player = function(socket, name) {
         console.log('different board, need update')
         this.socket.emit('game', {
           type : 'BOARD_UPDATE',
-          payload : this.board.displayGrid
+          payload : {
+            displayGrid: this.board.displayGrid,
+            nextPiece: this.board.nextPiece.id
+          }
         })
       }
 

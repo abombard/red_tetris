@@ -53,6 +53,7 @@ const emptyGrid = () => (
 const Board = function() {
   this.grid = emptyGrid()
   this.piece = new Piece(this.grid.length / 2, 0)
+  this.nextPiece = new Piece(this.grid.length / 2, 0)
   this.displayGrid = placePiece(
     this.piece.x,
     this.piece.y,
@@ -96,7 +97,8 @@ const Board = function() {
     }
     else if (y > 0) {
       console.log('cant go down anymore')
-      this.piece = new Piece(this.grid.length / 2, 0)
+      this.piece = this.nextPiece
+      this.nextPiece = new Piece(this.grid.length / 2, 0)
       this.grid = copyArray(this.displayGrid)
       this.displayGrid = placePiece(
         this.piece.x,
@@ -107,7 +109,8 @@ const Board = function() {
       if (this.displayGrid === null) {
         this.grid = emptyGrid()
         this.displayGridgrid = emptyGrid()
-        this.piece = new Piece(this.grid.length / 2, 0)
+        this.piece = this.nextPiece
+        this.nextPiece = new Piece(this.grid.length / 2, 0)
       }
     }
     this.grid = checkIfFull(this.grid)

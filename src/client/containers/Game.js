@@ -3,6 +3,7 @@ import Game from '../components/Game'
 
 const mapStateToProps = (state) => ({
   grid: state.grid.grid,
+  nextPiece: state.grid.nextPiece
 })
 
 const mapDispatchToProps = () => ({

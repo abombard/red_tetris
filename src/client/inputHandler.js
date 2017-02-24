@@ -12,6 +12,7 @@ const inputHandler = (socket) => (
       case UP:
       case DOWN:
       case SPACE:
+        ev.preventDefault()
         console.log(`key ${ev.keyCode}`)
         socket.emit('game', {
           type: 'KEY_PRESS',
