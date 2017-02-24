@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 
 import Grid from '../components/Grid'
-import './Game.css'
 
 const Game = ({ grid }) => (
   <div className='body'>

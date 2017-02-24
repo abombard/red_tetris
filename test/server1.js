@@ -1,3 +1,4 @@
+/*
 import chai from "chai"
 import {startServer, configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
@@ -25,3 +26,4 @@ describe('Fake server test', function(){
     store.dispatch(ping())
   });
 });
+*/
