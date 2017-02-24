@@ -1,11 +1,7 @@
 import React, { PropTypes } from 'react'
-
 import Grid from '../components/Grid'
-<<<<<<< HEAD
 import NextPiece from '../components/NextPiece'
 import './Game.css'
-=======
->>>>>>> master
 
 const Game = ({ grid, nextPiece }) => (
   <div className='game'>
