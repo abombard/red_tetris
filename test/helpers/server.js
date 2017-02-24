@@ -37,7 +37,12 @@ const myMiddleware = (types={}) => {
 const socketIoMiddleWare = socket => ({dispatch, getState}) => {
   if(socket) socket.on('action', dispatch)
   return next => action => {
-    if(socket && action.type && action.type.indexOf('server/') === 0) socket.emit('action', action)
+    if(socket && action.type) socket.emit('action', action)
+    return next(action)
+  }
+  if(socket) socket.on('room')
+  return next => action => {
+    if(socket && action.type) socket.emit('room', action)
     return next(action)
   }
 }
