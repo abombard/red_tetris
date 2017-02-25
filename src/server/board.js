@@ -46,14 +46,28 @@ const checkIfFull = (grid) => {
   return grid
 }
 
-const emptyGrid = () => (
-  new Array(10).fill(new Array(20).fill(0))
+const emptyGrid = (x, y) => (
+  new Array(x).fill(new Array(y).fill(0))
 )
 
+// Créer la petite grille de 4x4 remplie par la next piece centrée
+const displayNextPiece = (nextPiece) => {
+  let nextPieceGrid = copyArray(emptyGrid(4, 4))
+  let vert_offset = parseInt((5 - nextPiece.length) / 2)
+  let hor_offset = parseInt((4 - nextPiece[0].length) / 2)
+  for (let y = vert_offset, yp = 0; yp < nextPiece.length; y++, yp++) {
+    for (let x = hor_offset, xp = 0; xp < nextPiece[0].length; x++, xp++) {
+      nextPieceGrid[y][x] = nextPiece[yp][xp];
+    }
+  }
+  return nextPieceGrid;
+}
+
 const Board = function() {
-  this.grid = emptyGrid()
+  this.grid = emptyGrid(10, 20)
   this.piece = new Piece(this.grid.length / 2, 0)
   this.nextPiece = new Piece(this.grid.length / 2, 0)
+  this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
   this.displayGrid = placePiece(
     this.piece.x,
     this.piece.y,
@@ -99,6 +113,7 @@ const Board = function() {
       console.log('cant go down anymore')
       this.piece = this.nextPiece
       this.nextPiece = new Piece(this.grid.length / 2, 0)
+      this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
       this.grid = copyArray(this.displayGrid)
       this.displayGrid = placePiece(
         this.piece.x,
@@ -107,10 +122,11 @@ const Board = function() {
         this.piece.piece
       )
       if (this.displayGrid === null) {
-        this.grid = emptyGrid()
-        this.displayGridgrid = emptyGrid()
+        this.grid = emptyGrid(10, 20)
+        this.displayGridgrid = emptyGrid(10, 20)
         this.piece = this.nextPiece
         this.nextPiece = new Piece(this.grid.length / 2, 0)
+        this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
       }
     }
     this.grid = checkIfFull(this.grid)

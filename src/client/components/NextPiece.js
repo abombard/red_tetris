@@ -1,14 +1,21 @@
 import React, { PropTypes } from 'react'
+import GridRow from './GridRow'
 
 const NextPiece = ({ nextPiece }) => (
-  <div className='nextPiece'>
+  <div className='nextPieceContainer'>
   	{ console.log('DEBUG:'+nextPiece+'!!!!!!!!!!!!!!')}
-  	{ nextPiece }
+  	<div className='nextPiece'>
+	  {
+	    nextPiece.map((row, key) => (
+	      <GridRow key={key} row={row} />
+	    ))
+	  }
+	</div>
   </div>
 )
 
 NextPiece.propTypes = {
-  nextPiece: PropTypes.number.isRequired
+  nextPiece: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
 }
 
 export default NextPiece

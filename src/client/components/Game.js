@@ -12,7 +12,7 @@ const Game = ({ grid, nextPiece }) => (
 
 Game.propTypes = {
   grid: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  nextPiece: PropTypes.number.isRequired
+  nextPiece: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
 }
 
 export default Game

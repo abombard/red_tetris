@@ -16,7 +16,7 @@ var Player = function(socket, name) {
     payload :
     {
       displayGrid: this.board.displayGrid,
-      nextPiece: this.board.nextPiece.id
+      nextPiece: this.board.nextPieceGrid
     }
   })
 
@@ -77,7 +77,7 @@ var Player = function(socket, name) {
           type : 'BOARD_UPDATE',
           payload : {
             displayGrid: this.board.displayGrid,
-            nextPiece: this.board.nextPiece.id
+            nextPiece: this.board.nextPieceGrid
           }
         })
       }
