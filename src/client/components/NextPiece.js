@@ -2,15 +2,12 @@ import React, { PropTypes } from 'react'
 import GridRow from './GridRow'
 
 const NextPiece = ({ nextPiece }) => (
-  <div className='nextPieceContainer'>
-  	{ console.log('DEBUG:'+nextPiece+'!!!!!!!!!!!!!!')}
-  	<div className='nextPiece'>
-	  {
-	    nextPiece.map((row, key) => (
-	      <GridRow key={key} row={row} />
-	    ))
-	  }
-	</div>
+  <div className='nextPiece'>
+    {
+      nextPiece.map((row, key) => (
+        <GridRow key={key} row={row} />
+      ))
+    }
   </div>
 )
 

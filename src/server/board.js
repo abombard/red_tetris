@@ -63,17 +63,33 @@ const displayNextPiece = (nextPiece) => {
   return nextPieceGrid;
 }
 
+const createShadow = (grid) => {
+  var shadow = copyArray(emptyGrid(10,20))
+  for (let y = 0; y < 10; y++) {
+    let x = 0
+    while (grid[y][x] == 0 && x < 20) {
+      x++;
+    }
+    while (x < 20) {
+      shadow[y][x] = 8;
+      x++;
+    }
+  }
+  return (shadow)
+}
+
 const Board = function() {
   this.grid = emptyGrid(10, 20)
   this.piece = new Piece(this.grid.length / 2, 0)
   this.nextPiece = new Piece(this.grid.length / 2, 0)
   this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
+  this.shadow = createShadow(this.grid)
   this.displayGrid = placePiece(
     this.piece.x,
     this.piece.y,
     this.grid,
     this.piece.piece
-  );
+  )
   if (this.displayGrid !== null) {
     console.log("first piece placed successfully");
   }
@@ -115,6 +131,10 @@ const Board = function() {
       this.nextPiece = new Piece(this.grid.length / 2, 0)
       this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
       this.grid = copyArray(this.displayGrid)
+      this.shadow = createShadow(this.grid)
+      console.log(this.grid)
+      console.log(this.displayGrid)
+      console.log(this.shadow)
       this.displayGrid = placePiece(
         this.piece.x,
         this.piece.y,
@@ -123,6 +143,7 @@ const Board = function() {
       )
       if (this.displayGrid === null) {
         this.grid = emptyGrid(10, 20)
+        this.shadow = createShadow(this.grid)
         this.displayGridgrid = emptyGrid(10, 20)
         this.piece = this.nextPiece
         this.nextPiece = new Piece(this.grid.length / 2, 0)

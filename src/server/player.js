@@ -16,7 +16,8 @@ var Player = function(socket, name) {
     payload :
     {
       displayGrid: this.board.displayGrid,
-      nextPiece: this.board.nextPieceGrid
+      nextPiece: this.board.nextPieceGrid,
+      shadow: this.board.shadow
     }
   })
 
@@ -77,11 +78,11 @@ var Player = function(socket, name) {
           type : 'BOARD_UPDATE',
           payload : {
             displayGrid: this.board.displayGrid,
-            nextPiece: this.board.nextPieceGrid
+            nextPiece: this.board.nextPieceGrid,
+            shadow: this.board.shadow
           }
         })
       }
-
       previousBoard = this.board.displayGrid
     }, 16) // 60 tickrate (should be enough for tetris kek)
   }
