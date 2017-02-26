@@ -9,19 +9,15 @@ const SPACE = 32
 var Player = function(socket, name) {
   this.socket = socket
   this.name = name
-  this.board = new Board()
-
-  this.socket.emit('game', {
-    type : 'BOARD_UPDATE',
-    payload :
-    {
-      displayGrid: this.board.displayGrid,
-      nextPiece: this.board.nextPieceGrid,
-      shadow: this.board.shadow
-    }
-  })
+  this.board = null
+  this.room = null
+  this.inGame = false
 
   this.socket.on('game', (data) => {
+    if (!this.inGame) {
+      return
+    }
+
     switch (data.type) {
     case 'KEY_PRESS':
       this.board.update = data.payload;
@@ -32,14 +28,41 @@ var Player = function(socket, name) {
     }
   })
 
+  this.startGame = () => {
+    if (this.inGame === false) {
+      this.board = new Board()
+      this.socket.emit('game', {
+        type : 'BOARD_UPDATE',
+        payload : this.board.displayGrid,
+        nextPiece: this.board.nextPieceGrid,
+        shadow: this.board.shadow
+      })
+
+      this.inGame = true
+      this.loop()
+      return true
+    }
+    return false
+  }
+
+  this.endGame = () => {
+    if (this.inGame) {
+      clearInterval(this.loopID)
+      this.board = null
+    }
+    this.inGame = false
+  }
+
   this.loop = () => {
 
     this.dropSpeed = 500
     let dropDownCallback = () => {
-      setTimeout(() => {
-        this.board.move(0, 1);
-        dropDownCallback()
-      }, this.dropSpeed)
+        setTimeout(() => {
+          if (this.inGame) {
+            this.board.move(0, 1);
+            dropDownCallback()
+          }
+        }, this.dropSpeed)
     }
     dropDownCallback()
 
@@ -73,7 +96,6 @@ var Player = function(socket, name) {
 
       //console.log(this.board.displayGrid)
       if (this.board.displayGrid != previousBoard) {
-        console.log('different board, need update')
         this.socket.emit('game', {
           type : 'BOARD_UPDATE',
           payload : {
@@ -86,6 +108,10 @@ var Player = function(socket, name) {
       previousBoard = this.board.displayGrid
     }, 16) // 60 tickrate (should be enough for tetris kek)
   }
+
+  this.toRawData = () => ({
+    name: this.name,
+  })
 
 }
 

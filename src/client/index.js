@@ -35,7 +35,8 @@ const onEnterLobby = () => {
 const onEnterRoom = (nextState) => {
   socket.emit('room', {
     type: 'JOIN_ROOM',
-    name: nextState.params.playerName,
+    roomName: nextState.params.roomName,
+    playerName: nextState.params.playerName,
   })
 }
 

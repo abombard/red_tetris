@@ -1,8 +1,16 @@
 import React, { PropTypes } from 'react'
 import RoomItem from './RoomItem'
 
-const RoomList = ({ rooms, onRefreshClick, onRoomClick }) => (
+const onChangeHandler = (handler) => ((evt) => {
+  handler(evt.target.value)
+})
+
+const RoomList = ({ rooms, createName, onRefreshClick, onRoomClick, onCreateRoomChange, onCreateClick }) => (
   <div>
+    <input type='text' value={createName} onChange={onChangeHandler(onCreateRoomChange)} />
+    <button onClick={onCreateClick}>
+      {'Create'}
+    </button>
     <button onClick={onRefreshClick}>
       {'Refresh'}
     </button>
@@ -23,6 +31,7 @@ RoomList.propTypes = {
   }).isRequired).isRequired,
   onRefreshClick: PropTypes.func.isRequired,
   onRoomClick: PropTypes.func.isRequired,
+  onCreateClick: PropTypes.func.isRequired,
 }
 
 export default RoomList
