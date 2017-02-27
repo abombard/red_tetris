@@ -96,7 +96,6 @@ export const handle = (io) => {
               name: player.name,
             })
             socket.leave(player.room.name)
-            player.endGame()
             player.room.leave(player)
             if (player.room.players.length === 0) {
               delete rooms[player.room.name]
@@ -109,7 +108,6 @@ export const handle = (io) => {
     })
 
     socket.on('disconnect', () => {
-      player.endGame()
       if (player.room) {
         io.to(player.room.name).emit('room', {
           type: 'PLAYER_LEAVE',
