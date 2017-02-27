@@ -19,12 +19,12 @@ var Player = function(socket, name) {
     }
 
     switch (data.type) {
-    case 'KEY_PRESS':
-      this.board.update = data.payload;
-      break ;
-    default:
-      console.log(`Unexpected action ${action.type}`)
-      break ;
+      case 'KEY_PRESS':
+        this.board.update = data.payload;
+        break ;
+      default:
+        console.log(`Unexpected action ${action.type}`)
+        break ;
     }
   })
 
@@ -57,12 +57,12 @@ var Player = function(socket, name) {
 
     this.dropSpeed = 500
     let dropDownCallback = () => {
-        setTimeout(() => {
-          if (this.inGame) {
-            this.board.move(0, 1);
-            dropDownCallback()
-          }
-        }, this.dropSpeed)
+      setTimeout(() => {
+        if (this.inGame) {
+          this.board.move(0, 1);
+          dropDownCallback()
+        }
+      }, this.dropSpeed)
     }
     dropDownCallback()
 
@@ -96,23 +96,29 @@ var Player = function(socket, name) {
 
       //console.log(this.board.displayGrid)
       if (this.board.displayGrid != previousBoard) {
-        this.socket.emit('game', {
-          type : 'BOARD_UPDATE',
-          payload : {
-            displayGrid: this.board.displayGrid,
-            nextPiece: this.board.nextPieceGrid,
-            shadow: this.board.shadow
+        let shad = this.board.shadow
+        for (let i = 0; i < this.room.players.length; i++) {
+          if (this.room.players[i].socket != this.socket) {
+            shad = this.room.players[i].board.shadow;
           }
-        })
-      }
-      previousBoard = this.board.displayGrid
-    }, 16) // 60 tickrate (should be enough for tetris kek)
+        }
+          this.socket.emit('game', {
+            type : 'BOARD_UPDATE',
+            payload : {
+              displayGrid: this.board.displayGrid,
+              nextPiece: this.board.nextPieceGrid,
+              shadow: shad
+            }
+          })
+        }
+        previousBoard = this.board.displayGrid
+      }, 16) // 60 tickrate (should be enough for tetris kek)
+    }
+
+      this.toRawData = () => ({
+        name: this.name,
+      })
+
   }
 
-  this.toRawData = () => ({
-    name: this.name,
-  })
-
-}
-
-module.exports = Player;
+  module.exports = Player;
