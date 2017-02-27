@@ -1,11 +1,15 @@
 const Piece = require('./piece')
 
-const copyArray = (arr) => (
+const clone = (arr) => (
   JSON.parse(JSON.stringify(arr))
 )
 
+const emptyGrid = () => (
+  new Array(10).fill(new Array(20).fill(0))
+)
+
 const placePiece = (x0, y0, grid, piece) => {
-  let newGrid = copyArray(grid)
+  let newGrid = clone(grid)
 
   for (let x = 0; x < piece.length; x++) {
     for (let y = 0; y < piece[0].length; y++) {
@@ -46,17 +50,13 @@ const checkIfFull = (grid) => {
   return grid
 }
 
-const emptyGrid = () => (
-  new Array(10).fill(new Array(20).fill(0))
-)
-
 const emptyPiece = () => (
   new Array(4).fill(new Array(4).fill(0))
 )
 
 // Créer la petite grille de 4x4 remplie par la next piece centrée
 const displayNextPiece = (nextPiece) => {
-  let nextPieceGrid = copyArray(emptyPiece())
+  let nextPieceGrid = clone(emptyPiece())
   let vert_offset = parseInt((5 - nextPiece.length) / 2)
   let hor_offset = parseInt((4 - nextPiece[0].length) / 2)
   for (let y = vert_offset, yp = 0; yp < nextPiece.length; y++, yp++) {
@@ -68,7 +68,7 @@ const displayNextPiece = (nextPiece) => {
 }
 
 const createShadow = (grid) => {
-  let shadow = copyArray(emptyGrid())
+  let shadow = clone(emptyGrid())
   for (let y = 0; y < 10; y++) {
     let x = 0
     while (grid[y][x] == 0 && x < 20) {
@@ -82,22 +82,50 @@ const createShadow = (grid) => {
   return (shadow)
 }
 
-const Board = function() {
-  this.grid = emptyGrid()
-  this.piece = new Piece(this.grid.length / 2, 0)
-  this.nextPiece = new Piece(this.grid.length / 2, 0)
-  this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
-  this.shadow = createShadow(this.grid)
-  this.displayGrid = placePiece(
-    this.piece.x,
-    this.piece.y,
-    this.grid,
-    this.piece.piece
-  )
-  if (this.displayGrid !== null) {
-    console.log("first piece placed successfully");
+const Board = function(roomPieceList) {
+  if (!roomPieceList) {
+    console.log('Error: Initialize Board without roomPieceList')
   }
-  this.update = null
+
+  this.grid = null
+
+  this.roomPieceList = roomPieceList
+  this.pieceCount = 0
+
+  this.piece = null
+  this.nextPiece = null
+
+  this.nextPieceGrid = null
+  this.displayGrid = null
+
+  this.shadow = null
+
+  this.setupDisplay = () => {
+    this.displayGrid = placePiece(
+      this.piece.x,
+      this.piece.y,
+      this.grid,
+      this.piece.piece
+    )
+    this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
+    this.shadow = createShadow(this.grid)
+  }
+
+  this.init = () => {
+    this.grid = emptyGrid()
+    this.piece = this.roomPieceList[0].clone()
+    this.nextPiece = this.roomPieceList[1].clone()
+    this.pieceCount = 2
+    this.setupDisplay()
+  }
+
+  this.init()
+
+  this.getNextPiece = () => {
+    this.piece = this.nextPiece
+    this.nextPiece = this.roomPieceList[this.pieceCount].clone()
+    this.pieceCount ++
+  }
 
   this.rotatePiece = () => {
     this.piece.rotate()
@@ -124,34 +152,17 @@ const Board = function() {
       this.piece.piece
     )
     if (newdisplayGrid !== null) {
-      console.log("piece placed successfully")
       this.displayGrid = newdisplayGrid
       this.piece.y += y
       this.piece.x += x
     }
     else if (y > 0) {
       console.log('cant go down anymore')
-      this.piece = this.nextPiece
-      this.nextPiece = new Piece(this.grid.length / 2, 0)
-      this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
-      this.grid = copyArray(this.displayGrid)
-      this.shadow = createShadow(this.grid)
-      console.log(this.grid)
-      console.log(this.displayGrid)
-      console.log(this.shadow)
-      this.displayGrid = placePiece(
-        this.piece.x,
-        this.piece.y,
-        this.grid,
-        this.piece.piece
-      )
+      this.grid = clone(this.displayGrid)
+      this.getNextPiece()
+      this.setupDisplay()
       if (this.displayGrid === null) {
-        this.grid = emptyGrid()
-        this.shadow = createShadow(this.grid)
-        this.displayGridgrid = emptyGrid()
-        this.piece = this.nextPiece
-        this.nextPiece = new Piece(this.grid.length / 2, 0)
-        this.nextPieceGrid = displayNextPiece(this.nextPiece.piece)
+        this.init()
       }
     }
     this.grid = checkIfFull(this.grid)

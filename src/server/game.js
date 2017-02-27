@@ -81,7 +81,6 @@ export const handle = (io) => {
             })
             room.join(player)
             player.room = room
-            player.startGame()
           }
           else {
             socket.emit('room', {

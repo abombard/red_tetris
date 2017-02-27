@@ -10,25 +10,16 @@ var Player = function(socket, name) {
   this.socket = socket
   this.name = name
   this.board = null
+  this.screenGrid = null
   this.room = null
   this.inGame = false
 
-  this.socket.on('game', (data) => {
-    if (!this.inGame) {
+  this.updateScreen = () => {
+
+    if (this.screenGrid == this.board.displayGrid) {
       return
     }
 
-    switch (data.type) {
-      case 'KEY_PRESS':
-        this.board.update = data.payload;
-        break ;
-      default:
-        console.log(`Unexpected action ${action.type}`)
-        break ;
-    }
-  })
-
-  this.updateScreen = (enemyShadow) => {
     let shadow = this.board.shadow
     for (let i = 0; i < this.room.players.length; i++) {
       if (this.room.players[i].socket != this.socket) {
@@ -44,12 +35,47 @@ var Player = function(socket, name) {
         shadow: shadow,
       },
     })
+
+    this.screenGrid = this.board.displayGrid
   }
 
-  this.startGame = () => {
+  this.socket.on('game', (data) => {
     if (this.inGame === false) {
-      this.board = new Board()
-      this.updateScreen()
+      return
+    }
+
+    switch (data.type) {
+      case 'KEY_PRESS':
+        const input = data.payload;
+
+        switch (input) {
+          case LEFT:
+            this.board.move(1, 0)
+            break
+          case RIGHT:
+            this.board.move(-1, 0)
+            break
+          case DOWN:
+            this.board.move(0, 1)
+            break
+          case UP:
+          case SPACE:
+            this.board.rotatePiece()
+            break
+        }
+
+        break ;
+      default:
+        console.log(`Unexpected action KEY_PRESS ${action.type}`)
+        break ;
+    }
+
+  })
+
+  this.startGame = (pieces) => {
+    if (this.inGame === false) {
+      this.board = new Board(pieces)
+      this.screenGrid = this.board.displayGrid
       this.inGame = true
       this.loop()
       return true
@@ -78,38 +104,10 @@ var Player = function(socket, name) {
     }
     dropDownCallback()
 
-    let previousBoard = this.board.displayGrid
     this.loopID = setInterval(() => {
-      this.loopCount ++
+      this.updateScreen()
+    }, 16 )
 
-      if (this.board.update !== null) {
-
-        const update = this.board.update
-        this.board.update = null
-
-        switch (update) {
-          case LEFT:
-            this.board.move(1, 0)
-            break
-          case RIGHT:
-            this.board.move(-1, 0)
-            break
-          case DOWN:
-            this.board.move(0, 1)
-            break
-          case UP:
-          case SPACE:
-            this.board.rotatePiece()
-            break
-        }
-      }
-
-      //console.log(this.board.displayGrid)
-      if (this.board.displayGrid != previousBoard) {
-        this.updateScreen()
-      }
-      previousBoard = this.board.displayGrid
-    }, 16) // 60 tickrate (should be enough for tetris kek)
   }
 
   this.toRawData = () => ({

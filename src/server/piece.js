@@ -140,14 +140,24 @@ var Piece = function(x, y)  {
   this.id = getRandomPieceId()
   this.rot = 0
   this.piece = figures[this.id][this.rot]
+
   this.rotate = () => {
     this.rot = figures[this.id][this.rot + 1] === undefined ? 0 : this.rot + 1
     this.piece = figures[this.id][this.rot]
   }
+
   this.revRotate = () => {
     this.rot = figures[this.id][this.rot - 1] === undefined ?
       figures[this.id].length - 1 : this.rot - 1
     this.piece = figures[this.id][this.rot]
+  }
+
+  this.clone = () => {
+    let c = new Piece(this.x, this.y)
+    c.id = this.id
+    c.rot = this.rot
+    c.piece = this.piece
+    return c
   }
 }
 

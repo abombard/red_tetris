@@ -1,8 +1,12 @@
+import Piece from './piece'
+
 var Room = function(name) {
-  this.maxPlayer = 4
+  this.maxPlayer = 2
   this.name = name
   this.ownerID = null
   this.players = []
+
+  this.pieces = []
 
   this.join = (player) => {
     let success = this.players.length < this.maxPlayer
@@ -11,6 +15,9 @@ var Room = function(name) {
       if (this.ownerID === null) {
         this.ownerID = player.socket.id
       }
+    }
+    if (this.players.length == this.maxPlayer) {
+      this.startGame()
     }
     return success
   }
@@ -46,6 +53,27 @@ var Room = function(name) {
       return rawPlayers
     })()
   })
+
+  this.startGame = () => {
+    console.log('Starting Game')
+
+    for (let i = 0; i < 500; i ++) {
+      this.pieces.push(new Piece(5, 0)) // i know i know
+    }
+
+    this.players.map((player) => {
+      player.startGame(this.pieces)
+    })
+
+  }
+
+  this.endGame = () => {
+    console.log('End Game')
+    this.players.map((player) => {
+      player.endGame()
+    })
+  }
+
 }
 
 module.exports = Room
