@@ -75,6 +75,8 @@ const Board = function(roomPieceList) {
 
   this.shadow = null
 
+  this.gameOver = false
+
   this.setupDisplay = () => {
     this.displayGrid = placePiece(
       this.piece.x,
@@ -136,7 +138,7 @@ const Board = function(roomPieceList) {
       this.getNextPiece()
       this.setupDisplay()
       if (this.displayGrid === null) {
-        console.log('Game Over')
+        this.gameOver = true
         this.init()
       }
     }

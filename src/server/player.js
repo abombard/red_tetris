@@ -33,6 +33,7 @@ var Player = function(socket, name) {
         displayGrid: this.board.displayGrid,
         nextPiece: this.board.nextPieceGrid,
         shadow: shadow,
+        win: this.board.gameOver ? -1 : 0,
       },
     })
 
@@ -77,10 +78,6 @@ var Player = function(socket, name) {
   this.initGame = (pieces) => {
     this.board = new Board(pieces)
     this.screenGrid = this.board.displayGrid
-  }
-
-  this.endGame = () => {
-    this.board = null
   }
 
   this.toRawData = () => ({

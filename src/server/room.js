@@ -23,6 +23,7 @@ var Room = function(name) {
   }
 
   this.leave = (player) => {
+    this.endGame()
     let index = this.players.indexOf(player)
     if (index != -1) {
       this.players.splice(index, 1)
@@ -54,6 +55,22 @@ var Room = function(name) {
     })()
   })
 
+  this.allPlayerBut = (src, cb) => {
+    this.players.map((player) => {
+      if (player !== src) {
+        cb(player)
+      }
+    })
+  }
+
+  this.sendAll = (src, type, data) => {
+    this.players.map((dst) => {
+      if (dst !== src) {
+        dst.socket.emit(type, data)
+      }
+    })
+  }
+
   this.startGame = () => {
     console.log('Starting Game')
 
@@ -75,12 +92,18 @@ var Room = function(name) {
         const fullLineCount = player.board.checkFullLine()
         if (fullLineCount > 0) {
           console.log(`Found ${fullLineCount} full lines`)
-          this.players.map((p) => {
-            if (p !== player) {
-              console.log('adding line to player')
-              p.board.addLine(fullLineCount)
-            }
+          this.allPlayerBut(player, (enemy) => {
+            console.log('adding line to enemy')
+            enemy.board.addLine(fullLineCount)
           })
+        }
+
+        if (player.board.gameOver) {
+          player.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: -1 } }) // this is not really used
+          this.allPlayerBut(player, (enemy) => {
+            enemy.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: 1 } })
+          })
+          this.endGame()
         }
 
         player.updateScreen()
@@ -95,9 +118,6 @@ var Room = function(name) {
   this.endGame = () => {
     console.log('End Game')
     clearInterval(this.loopID)
-    this.players.map((player) => {
-      player.endGame()
-    })
   }
 
 }
