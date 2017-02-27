@@ -56,7 +56,7 @@ const emptyPiece = () => (
 
 // Créer la petite grille de 4x4 remplie par la next piece centrée
 const displayNextPiece = (nextPiece) => {
-  let nextPieceGrid = emptyPiece()
+  let nextPieceGrid = copyArray(emptyPiece())
   let vert_offset = parseInt((5 - nextPiece.length) / 2)
   let hor_offset = parseInt((4 - nextPiece[0].length) / 2)
   for (let y = vert_offset, yp = 0; yp < nextPiece.length; y++, yp++) {
@@ -68,7 +68,7 @@ const displayNextPiece = (nextPiece) => {
 }
 
 const createShadow = (grid) => {
-  var shadow = emptyGrid()
+  let shadow = copyArray(emptyGrid())
   for (let y = 0; y < 10; y++) {
     let x = 0
     while (grid[y][x] == 0 && x < 20) {
