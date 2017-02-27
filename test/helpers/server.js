@@ -33,16 +33,39 @@ const myMiddleware = (types={}) => {
     return result
   }
 }
-
+/*
 const socketIoMiddleWare = socket => ({dispatch, getState}) => {
   if(socket) socket.on('action', dispatch)
   return next => action => {
     if(socket && action.type) socket.emit('action', action)
     return next(action)
   }
-  if(socket) socket.on('room')
+  if(socket) socket.on('room', dispatch)
   return next => action => {
     if(socket && action.type) socket.emit('room', action)
+    return next(action)
+  }
+  if(socket) socket.on('lobby', dispatch)
+  return next => action => {
+    if(socket && action.type) socket.emit('lobby', action)
+    return next(action)
+  }
+}*/
+const socketIoMiddleWare = socket => ({dispatch, getState}) => {
+  if(socket)
+  {
+    socket.on('lobby', dispatch)
+    socket.on('room', dispatch)
+    socket.on('action', dispatch)
+    socket.on('game', dispatch)
+  }
+  return next => action => {
+    if(socket && action.type) {
+      socket.emit('lobby', action)
+      socket.emit('game', action)
+      socket.emit('room', action)
+      socket.emit('action', action)
+    }
     return next(action)
   }
 }

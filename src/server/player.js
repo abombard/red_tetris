@@ -43,6 +43,11 @@ var Player = function(socket, name) {
 
     switch (data.type) {
       case 'KEY_PRESS':
+
+        this.socket.emit('game', {
+          type: 'KEY_PRESS_OK',
+        })
+
         const input = data.payload;
 
         switch (input) {
@@ -63,7 +68,7 @@ var Player = function(socket, name) {
 
         break ;
       default:
-        console.log(`Unexpected action KEY_PRESS ${action.type}`)
+        console.log(`Unexpected action KEY_PRESS ${data.type}`)
         break ;
     }
 

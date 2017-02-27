@@ -91,11 +91,11 @@ export const handle = (io) => {
           break
         case 'LEAVE_ROOM':
           if (player.room) {
-            socket.leave(player.room.name)
             io.to(player.room.name).emit('room', {
               type: 'PLAYER_LEAVE',
               name: player.name,
             })
+            socket.leave(player.room.name)
             player.endGame()
             player.room.leave(player)
             if (player.room.players.length === 0) {

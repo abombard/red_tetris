@@ -1,3 +1,5 @@
 --require chai
 -R spec
 --ui bdd
+--require test/babelhook
+--require test/css-null-compiler
