@@ -28,16 +28,28 @@ var Player = function(socket, name) {
     }
   })
 
+  this.updateScreen = (enemyShadow) => {
+    let shadow = this.board.shadow
+    for (let i = 0; i < this.room.players.length; i++) {
+      if (this.room.players[i].socket != this.socket) {
+        shadow = this.room.players[i].board.shadow;
+      }
+    }
+
+    this.socket.emit('game', {
+      type: 'BOARD_UPDATE',
+      payload: {
+        displayGrid: this.board.displayGrid,
+        nextPiece: this.board.nextPieceGrid,
+        shadow: shadow,
+      },
+    })
+  }
+
   this.startGame = () => {
     if (this.inGame === false) {
       this.board = new Board()
-      this.socket.emit('game', {
-        type : 'BOARD_UPDATE',
-        payload : this.board.displayGrid,
-        nextPiece: this.board.nextPieceGrid,
-        shadow: this.board.shadow
-      })
-
+      this.updateScreen()
       this.inGame = true
       this.loop()
       return true
@@ -75,50 +87,35 @@ var Player = function(socket, name) {
         const update = this.board.update
         this.board.update = null
 
-        if (update !== null) {
-          switch (update) {
-            case LEFT:
-              this.board.move(1, 0)
-              break
-            case RIGHT:
-              this.board.move(-1, 0)
-              break
-            case DOWN:
-              this.board.move(0, 1)
-              break
-            case UP:
-            case SPACE:
-              this.board.rotatePiece()
-              break
-          }
+        switch (update) {
+          case LEFT:
+            this.board.move(1, 0)
+            break
+          case RIGHT:
+            this.board.move(-1, 0)
+            break
+          case DOWN:
+            this.board.move(0, 1)
+            break
+          case UP:
+          case SPACE:
+            this.board.rotatePiece()
+            break
         }
       }
 
       //console.log(this.board.displayGrid)
       if (this.board.displayGrid != previousBoard) {
-        let shad = this.board.shadow
-        for (let i = 0; i < this.room.players.length; i++) {
-          if (this.room.players[i].socket != this.socket) {
-            shad = this.room.players[i].board.shadow;
-          }
-        }
-          this.socket.emit('game', {
-            type : 'BOARD_UPDATE',
-            payload : {
-              displayGrid: this.board.displayGrid,
-              nextPiece: this.board.nextPieceGrid,
-              shadow: shad
-            }
-          })
-        }
-        previousBoard = this.board.displayGrid
-      }, 16) // 60 tickrate (should be enough for tetris kek)
-    }
-
-      this.toRawData = () => ({
-        name: this.name,
-      })
-
+        this.updateScreen()
+      }
+      previousBoard = this.board.displayGrid
+    }, 16) // 60 tickrate (should be enough for tetris kek)
   }
 
-  module.exports = Player;
+  this.toRawData = () => ({
+    name: this.name,
+  })
+
+}
+
+module.exports = Player;
