@@ -21,9 +21,12 @@ var Player = function(socket, name) {
     switch (data.type) {
       case 'KEY_PRESS':
         this.board.update = data.payload;
+        this.socket.emit('game', {
+          type: 'KEY_PRESS_OK',
+        })
         break ;
       default:
-        console.log(`Unexpected action ${action.type}`)
+        console.log(`Unexpected action ${data.type}`)
         break ;
     }
   })

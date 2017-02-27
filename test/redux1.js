@@ -20,6 +20,8 @@ const EMPTY_ROOMS = []
 const ROOM_LIST = [{name : "kitchen", playerCount: 2},{name : "livingroom", playerCount: 45}]
 
 
+const PAYLOAD = {displayGrid: GRID}
+
 chai.should()
 
 describe('map transmission', function(){
@@ -28,11 +30,12 @@ describe('map transmission', function(){
     const store =  configureStore(rootReducer, null, initialState, {
       GET_MAP: ({dispatch, getState}) =>  {
         const state = getState()
+        console.log(state.grid)
         state.grid.grid.should.equal(GRID)
         done()
       }
     })
-    store.dispatch(getMap(GRID))
+    store.dispatch(getMap(PAYLOAD))
   });
 
 });
