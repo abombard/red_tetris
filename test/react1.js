@@ -43,7 +43,7 @@ describe('react test', function(){
 
     )
   })
-  it('roomlist comp works', function(){
+  it('roomitem comp works', function(){
     const renderer = createRenderer()
     renderer.render(React.createElement(RoomItem, {name: 'lle',playerCount: 2,  maxPlayer: 4}))
     const output = renderer.getRenderOutput()
@@ -61,7 +61,7 @@ describe('react test', function(){
 
     )
   })
-  it('roomlist comp works with too mich players', function(){
+  it('roomitem comp works with too mich players', function(){
     const renderer = createRenderer()
     renderer.render(React.createElement(RoomItem, {name: 'lle',playerCount: 40,  maxPlayer: 4}))
     const output = renderer.getRenderOutput()

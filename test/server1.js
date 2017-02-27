@@ -19,8 +19,8 @@ describe('server test', function(){
     tetrisServer = server
     cb()
   }))
-
     const socket = io(params.server.url)
+    const socket2 = io(params.server.url)
   after(function(done){tetrisServer.stop(done)})
 
   it('should delete rooms', function(done){
@@ -58,15 +58,81 @@ describe('server test', function(){
       roomName: 'randomroomname'
     })
   });
-  it('should play', function(done){
+  it('should join a room', function(done){
     const initialState = {}
-    const store =  configureStore(rootReducer, socket, initialState, {
-      'KEY_PRESS_OK': () =>  done()
+    const store =  configureStore(rootReducer, socket2, initialState, {
+      'PLAYER_JOIN': () =>  done()
     })
     store.dispatch({
-      type: 'KEY_PRESS',
+      type: 'JOIN_ROOM',
+      roomName: 'randomroomname'
     })
   });
+  for (let i = 0; i < 15; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 37
+      })
+    });
+  }
+  for (let i = 0; i < 15; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 39
+      })
+    });
+  }
+  for (let i = 0; i < 15; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 32
+      })
+    });
+  }
+  for (let i = 0; i < 15; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 38
+      })
+    });
+  }
+  for (let i = 0; i < 100; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 40
+      })
+    });
+  }
 
   it('should leave a room', function(done){
     const initialState = {}
@@ -87,6 +153,4 @@ describe('server test', function(){
       roomName: ''
     })
   });
-
-
 });
