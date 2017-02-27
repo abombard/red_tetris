@@ -40,9 +40,6 @@ var Player = function(socket, name) {
   }
 
   this.socket.on('game', (data) => {
-    if (this.inGame === false) {
-      return
-    }
 
     switch (data.type) {
       case 'KEY_PRESS':
@@ -72,42 +69,13 @@ var Player = function(socket, name) {
 
   })
 
-  this.startGame = (pieces) => {
-    if (this.inGame === false) {
-      this.board = new Board(pieces)
-      this.screenGrid = this.board.displayGrid
-      this.inGame = true
-      this.loop()
-      return true
-    }
-    return false
+  this.initGame = (pieces) => {
+    this.board = new Board(pieces)
+    this.screenGrid = this.board.displayGrid
   }
 
   this.endGame = () => {
-    if (this.inGame) {
-      clearInterval(this.loopID)
-      this.board = null
-    }
-    this.inGame = false
-  }
-
-  this.loop = () => {
-
-    this.dropSpeed = 500
-    let dropDownCallback = () => {
-      setTimeout(() => {
-        if (this.inGame) {
-          this.board.move(0, 1);
-          dropDownCallback()
-        }
-      }, this.dropSpeed)
-    }
-    dropDownCallback()
-
-    this.loopID = setInterval(() => {
-      this.updateScreen()
-    }, 16 )
-
+    this.board = null
   }
 
   this.toRawData = () => ({

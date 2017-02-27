@@ -1,6 +1,6 @@
 const Piece = require('./piece')
 
-const clone = (arr) => (
+const copyArray = (arr) => (
   JSON.parse(JSON.stringify(arr))
 )
 
@@ -9,13 +9,12 @@ const emptyGrid = () => (
 )
 
 const placePiece = (x0, y0, grid, piece) => {
-  let newGrid = clone(grid)
+  let newGrid = copyArray(grid)
 
   for (let x = 0; x < piece.length; x++) {
     for (let y = 0; y < piece[0].length; y++) {
       if ((x + x0 >= newGrid.length || x + x0 < 0 || y + y0 < 0 || y + y0 >= newGrid[0].length) ||
         (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0)) {
-        console.log('returning null');
         return null;
       }
       else if (piece[x][y] !== 0) {
@@ -26,37 +25,13 @@ const placePiece = (x0, y0, grid, piece) => {
   return newGrid;
 }
 
-const deleteLine = (grid, yline) => {
-  for (let y = yline; y > 1; y--) {
-    for (let x = 0; x < grid.length; x++) {
-      grid[x][y] = grid[x][y-1]
-    }
-  }
-  return grid
-}
-
-const checkIfFull = (grid) => {
-  let fullline = true;
-  for (let y = 0; y < grid[0].length; y++) {
-    for (let x = 0; x < grid.length; x++) {
-      if (grid[x][y] === 0)
-        fullline = false
-    }
-    if (fullline === true)
-      grid = deleteLine(grid, y);
-    else
-      fullline = true;
-  }
-  return grid
-}
-
 const emptyPiece = () => (
   new Array(4).fill(new Array(4).fill(0))
 )
 
 // Créer la petite grille de 4x4 remplie par la next piece centrée
 const displayNextPiece = (nextPiece) => {
-  let nextPieceGrid = clone(emptyPiece())
+  let nextPieceGrid = copyArray(emptyPiece())
   let vert_offset = parseInt((5 - nextPiece.length) / 2)
   let hor_offset = parseInt((4 - nextPiece[0].length) / 2)
   for (let y = vert_offset, yp = 0; yp < nextPiece.length; y++, yp++) {
@@ -68,7 +43,7 @@ const displayNextPiece = (nextPiece) => {
 }
 
 const createShadow = (grid) => {
-  let shadow = clone(emptyGrid())
+  let shadow = copyArray(emptyGrid())
   for (let y = 0; y < 10; y++) {
     let x = 0
     while (grid[y][x] == 0 && x < 20) {
@@ -157,15 +132,62 @@ const Board = function(roomPieceList) {
       this.piece.x += x
     }
     else if (y > 0) {
-      console.log('cant go down anymore')
-      this.grid = clone(this.displayGrid)
+      this.grid = copyArray(this.displayGrid)
       this.getNextPiece()
       this.setupDisplay()
       if (this.displayGrid === null) {
+        console.log('Game Over')
         this.init()
       }
     }
-    this.grid = checkIfFull(this.grid)
+
+  }
+
+  this.deleteLine = (yline) => {
+    for (let y = yline; y > 1; y--) {
+      for (let x = 0; x < this.grid.length; x++) {
+        this.grid[x][y] = this.grid[x][y-1]
+      }
+    }
+  }
+
+  this.checkFullLine = () => {
+    let fullLineCount = 0
+
+    for (let y = 0; y < this.grid[0].length; y++) {
+      let fullLine = true;
+
+      for (let x = 0; x < this.grid.length; x++) {
+        if (this.grid[x][y] === 0 || this.grid[x][y] == 42) {
+          fullLine = false
+          break
+        }
+      }
+      if (fullLine === true) {
+        fullLineCount += 1
+        this.deleteLine(y);
+      }
+    }
+
+    return fullLineCount
+  }
+
+  this.addLine = (lineCount) => {
+    let newGrid = emptyGrid()
+
+    for (let y = lineCount; y < this.grid[0].length; y ++) {
+      for (let x = 0; x < this.grid.length; x ++) {
+        newGrid[x][y - lineCount] = this.grid[x][y]
+      }
+    }
+
+    for (let y = this.grid[0].length - lineCount; y < this.grid[0].length; y ++) {
+      for (let x = 0; x < this.grid.length; x ++) {
+        newGrid[x][y] = 42
+      }
+    }
+
+    this.grid = newGrid
   }
 
 }

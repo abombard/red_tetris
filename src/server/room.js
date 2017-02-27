@@ -62,13 +62,39 @@ var Room = function(name) {
     }
 
     this.players.map((player) => {
-      player.startGame(this.pieces)
+      player.initGame(this.pieces)
     })
+
+    this.loopCount = 0
+    this.gameLoop = () => {
+      this.players.map((player) => {
+        if (this.loopCount == 32) { // 500 / 16 = 32
+          player.board.move(0, 1)
+        }
+
+        const fullLineCount = player.board.checkFullLine()
+        if (fullLineCount > 0) {
+          console.log(`Found ${fullLineCount} full lines`)
+          this.players.map((p) => {
+            if (p !== player) {
+              console.log('adding line to player')
+              p.board.addLine(fullLineCount)
+            }
+          })
+        }
+
+        player.updateScreen()
+      })
+      this.loopCount = this.loopCount == 32 ? 0 : this.loopCount + 1
+    }
+
+    this.loopID = setInterval(this.gameLoop, 16 )
 
   }
 
   this.endGame = () => {
     console.log('End Game')
+    clearInterval(this.loopID)
     this.players.map((player) => {
       player.endGame()
     })
