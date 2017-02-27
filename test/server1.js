@@ -2,7 +2,6 @@ import chai from "chai"
 import {startServer, configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
 import {reqRefreshRooms, refreshRooms} from '../src/client/actions/index'
-import {createRoom} from '../src/client/actions/server'
 import io from 'socket.io-client'
 import params from '../params'
 import {ROOM_LIST, PAYLOAD} from './redux1'
