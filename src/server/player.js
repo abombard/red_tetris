@@ -5,6 +5,7 @@ const LEFT = 39
 const UP = 38
 const DOWN = 40
 const SPACE = 32
+const ENTER = 13
 
 var Player = function(socket, name) {
   this.socket = socket
@@ -64,6 +65,9 @@ var Player = function(socket, name) {
           case UP:
           case SPACE:
             this.board.rotatePiece()
+            break
+          case ENTER:
+              this.room.restart()
             break
         }
 

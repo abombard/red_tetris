@@ -73,6 +73,8 @@ var Room = function(name) {
 
   this.startGame = () => {
     console.log('Starting Game')
+    this.players[0].inGame = true
+    this.players[1].inGame = true
 
     for (let i = 0; i < 500; i ++) {
       this.pieces.push(new Piece(5, 0)) // i know i know
@@ -118,6 +120,17 @@ var Room = function(name) {
   this.endGame = () => {
     console.log('End Game')
     clearInterval(this.loopID)
+    this.players[0].inGame = false
+    this.players[1].inGame = false
+  }
+
+  this.restart = () => {
+    if (this.players[0].inGame == false && this.players[1].inGame == false)
+    {
+      this.players[0].initGame(this.pieces)
+      this.players[1].initGame(this.pieces)
+      this.startGame()
+    }
   }
 
 }

@@ -3,6 +3,7 @@ const LEFT = 39
 const UP = 38
 const DOWN = 40
 const SPACE = 32
+const ENTER = 13
 
 const inputHandler = (socket) => (
   (ev) => {
@@ -12,6 +13,7 @@ const inputHandler = (socket) => (
       case UP:
       case DOWN:
       case SPACE:
+      case ENTER:
         ev.preventDefault()
         console.log(`key ${ev.keyCode}`)
         socket.emit('game', {
