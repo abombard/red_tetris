@@ -16,6 +16,12 @@ const Game = ({ grid, nextPiece, shadow, win }) => {
       <div className='victoryMsg'>YOU LOST ! Press Enter to restart</div>
     )
   }
+  else if (win == -2)
+  {
+    return (
+      <div className='victoryMsg'>Game not finished, please wait</div>
+    )
+  }
   else {
     return (
       <div className='game'>

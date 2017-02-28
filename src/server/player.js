@@ -23,7 +23,7 @@ var Player = function(socket, name) {
 
     let shadow = this.board.shadow
     for (let i = 0; i < this.room.players.length; i++) {
-      if (this.room.players[i].socket != this.socket) {
+      if (this.room.players[i].socket != this.socket && this.room.players[i].inGame === true) {
         shadow = this.room.players[i].board.shadow;
       }
     }
