@@ -107,14 +107,13 @@ var Room = function(name) {
           })
           this.endGame()
         }
-
-        player.updateScreen()
+        else
+          player.updateScreen()
       })
       this.loopCount = this.loopCount == 32 ? 0 : this.loopCount + 1
     }
 
     this.loopID = setInterval(this.gameLoop, 16 )
-
   }
 
   this.endGame = () => {
