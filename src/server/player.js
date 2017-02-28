@@ -67,6 +67,7 @@ var Player = function(socket, name) {
             this.board.rotatePiece()
             break
           case ENTER:
+            if (this.socket.id === this.room.ownerID)
               this.room.restart()
             break
         }

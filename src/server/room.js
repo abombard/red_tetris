@@ -119,15 +119,17 @@ var Room = function(name) {
   this.endGame = () => {
     console.log('End Game')
     clearInterval(this.loopID)
-    this.players[0].inGame = false
-    this.players[1].inGame = false
+    this.players.map((player) => {
+      player.inGame = false
+    })
   }
 
   this.restart = () => {
     if (this.players[0].inGame == false && this.players[1].inGame == false)
     {
-      this.players[0].initGame(this.pieces)
-      this.players[1].initGame(this.pieces)
+      this.players.map((player) => {
+        player.initGame(this.pieces)
+      })
       this.startGame()
     }
   }
