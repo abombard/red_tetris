@@ -62,8 +62,10 @@ var Player = function(socket, name) {
           case DOWN:
             this.board.move(0, 1)
             break
-          case UP:
           case SPACE:
+            this.board.move(0, 0, true)
+            break
+          case UP:
             this.board.rotatePiece()
             break
           case ENTER:

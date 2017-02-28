@@ -124,14 +124,35 @@ const Board = function(roomPieceList) {
     }
   }
 
-  this.move = (x, y) => {
-
-    const newdisplayGrid = placePiece(
-      this.piece.x + x,
-      this.piece.y + y,
-      this.grid,
-      this.piece.piece
-    )
+  this.move = (x, y, down) => {
+    let newdisplayGrid
+    if (down) {
+      newdisplayGrid = placePiece(
+        this.piece.x,
+        this.piece.y + 1,
+        this.grid,
+        this.piece.piece
+      )
+      while (newdisplayGrid !== null)
+      {
+        this.displayGrid = newdisplayGrid
+        newdisplayGrid = placePiece(
+          this.piece.x,
+          this.piece.y + 1,
+          this.grid,
+          this.piece.piece
+        )
+        this.piece.y += 1
+      }
+    }
+    else {
+      newdisplayGrid = placePiece(
+        this.piece.x + x,
+        this.piece.y + y,
+        this.grid,
+        this.piece.piece
+      )
+    }
     if (newdisplayGrid !== null) {
       this.displayGrid = newdisplayGrid
       this.piece.y += y
