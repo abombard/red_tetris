@@ -4,9 +4,13 @@ const copyArray = (arr) => (
   JSON.parse(JSON.stringify(arr))
 )
 
-const emptyGrid = () => (
-  new Array(10).fill(new Array(20).fill(0))
-)
+const emptyGrid = () => {
+  var x = new Array(10);
+  for (var i = 0; i < 10; i++) {
+      x[i] = new Array(20).fill(0);
+  }
+  return x
+}
 
 const placePiece = (x0, y0, grid, piece) => {
   let newGrid = copyArray(grid)
