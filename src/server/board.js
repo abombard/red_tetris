@@ -12,13 +12,42 @@ const emptyGrid = () => {
   return x
 }
 
-const placePiece = (x0, y0, grid, piece) => {
-  let newGrid = copyArray(grid)
+
+const getMaxPiece  = (piece) => {
+  let xmax = 0
+  let ymax = 0
+  let xmin = 4
+  let ymin = 4
 
   for (let x = 0; x < piece.length; x++) {
     for (let y = 0; y < piece[0].length; y++) {
-      if ((x + x0 >= newGrid.length || x + x0 < 0 || y + y0 < 0 || y + y0 >= newGrid[0].length) ||
-        (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0)) {
+      if (piece[x][y] !== 0 && y > ymax)
+        ymax = y
+      if (piece[x][y] !== 0 && y < ymin)
+        ymin = y
+      if (piece[x][y] !== 0 && x > xmax)
+        xmax = x
+      if (piece[x][y] !== 0 && x < xmin)
+        xmin = x
+    }
+  }
+  return {xmax: xmax, ymax: ymax, xmin: xmin, ymin: ymin}
+}
+
+const placePiece = (x0, y0, grid, piece) => {
+  let newGrid = copyArray(grid)
+  let minmax = getMaxPiece(piece)
+
+  console.log(piece)
+  console.log(minmax)
+      if (x0 + minmax.xmax >= newGrid.length || x0 + minmax.xmin < 0 || y0 + minmax.ymin < 0 || y0 + minmax.ymax >= newGrid[0].length)
+  {
+    return null
+  }
+
+  for (let x = 0; x < piece.length; x++) {
+    for (let y = 0; y < piece[0].length; y++) {
+      if (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0) {
         return null;
       }
       else if (piece[x][y] !== 0) {
