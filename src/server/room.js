@@ -65,14 +65,6 @@ var Room = function(name) {
     })
   }
 
-  this.sendAll = (src, type, data) => {
-    this.players.map((dst) => {
-      if (dst !== src) {
-        dst.socket.emit(type, data)
-      }
-    })
-  }
-
   this.startGame = () => {
     console.log('Starting Game')
     this.players.map((player) => {

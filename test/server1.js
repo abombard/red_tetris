@@ -30,14 +30,6 @@ describe('server test', function(){
     })
     store.dispatch(reqRefreshRooms())
   });
-  it('should get room list', function(done){
-    const initialState = {}
-    const store =  configureStore(rootReducer, socket, initialState, {
-      'REFRESH_ROOMS': () =>  done()
-    })
-    store.dispatch(refreshRooms(ROOM_LIST))
-  });
-
   it('should create a room', function(done){
     const initialState = {}
     const store =  configureStore(rootReducer, socket, initialState, {
@@ -58,6 +50,14 @@ describe('server test', function(){
       roomName: 'randomroomname'
     })
   });
+  it('should get room list', function(done){
+    const initialState = {}
+    const store =  configureStore(rootReducer, socket, initialState, {
+      'REFRESH_ROOMS': () =>  done()
+    })
+    store.dispatch(refreshRooms(ROOM_LIST))
+  });
+
   it('should join a room', function(done){
     const initialState = {}
     const store =  configureStore(rootReducer, socket2, initialState, {
@@ -120,6 +120,29 @@ describe('server test', function(){
       })
     });
   }
+  for (let i = 0; i < 100; i++)
+  {
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 40
+      })
+    });
+  }
+    it('should play', function(done){
+      const initialState = {}
+      const store =  configureStore(rootReducer, socket, initialState, {
+        'KEY_PRESS_OK': () =>  done()
+      })
+      store.dispatch({
+        type: 'KEY_PRESS',
+        payload: 13
+      })
+    });
   for (let i = 0; i < 100; i++)
   {
     it('should play', function(done){
