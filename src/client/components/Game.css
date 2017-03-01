@@ -139,6 +139,18 @@ body {
     height: 100%;
 }
 
+.piece {
+	height: 1.8em;
+}
+
+.piece .blank {
+	height: 0.8em;
+}
+
+.piece .grey {
+	height: 0.8em;
+}
+
 .blank { background-color: #222; }
 .orange-piece { background-color: #FF7D01; } /*L inversé*/
 .blue-piece { background-color: #0000FE; } /* L */

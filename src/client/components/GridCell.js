@@ -14,7 +14,7 @@ const colorMap = [
 colorMap[42] = 'black'
 
 const GridCell = ({ color }) => (
-  <div className={`GridCell ${colorMap[color]}`}>
+  <div className={`GridCell piece ${colorMap[color]}`}>
     <div className={`innerGridCell ${colorMap[color]}`}>
     </div>
   </div> 
