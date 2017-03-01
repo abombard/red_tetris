@@ -81,7 +81,7 @@ var Player = function(socket, name) {
 
         break ;
       default:
-        console.log(`Unexpected action KEY_PRESS ${data.type}`)
+        //console.log(`Unexpected action KEY_PRESS ${data.type}`)
         break ;
     }
 
