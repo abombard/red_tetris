@@ -1,12 +1,67 @@
-.blank { background-color: #fff; }
-.blue { background-color: #0000ff; }
-.green { background-color: #006400; }
-.red { background-color: #ff0000; }
-.yellow { background-color: #ffa500; }
-.magenta { background-color: #ff00ff; }
-.brown { background-color: #8b4513; }
-.grey { background-color: #a9a9a9; }
-.black { background-color: #444; }
+.blank { background-color: #000; }
+.orange-piece { background-color: #FF7D01; } /*L inversé*/
+.blue-piece { background-color: #0000FE; } /* L */
+.red-piece { background-color: #ff0000; }  /* Z */ 
+.pink-piece { background-color: #FF00FE; }  /* S */ 
+.yellow-piece { background-color: #FFFF01; } /* T */
+.green-piece { background-color: #00FF01; } /* I */
+.light-blue-piece { background-color: #01FFFF; } /* carré */
+
+.orange-piece .innerGridCell {
+	background-color: #FF7D01;
+	border-top: 9px solid #FFB367;
+	border-right: 9px solid #A75201;
+	border-bottom: 9px solid #743901;
+	border-left: 9px solid #FF9833;
+}
+
+.blue-piece .innerGridCell {
+	background-color: #0000FE;
+	border-top: 9px solid #6766FF;
+	border-right: 9px solid #0000AB;
+	border-bottom: 9px solid #000074;
+	border-left: 9px solid #3533FF;
+}
+
+.red-piece .innerGridCell {
+	background-color: #ff0000;
+	border-top: 9px solid #ff6767;
+	border-right: 9px solid #A80000;
+	border-bottom: 9px solid #740001;
+	border-left: 9px solid #FF3535;
+}
+
+.pink-piece .innerGridCell {
+	background-color: #ff00ff;
+    border-top: 9px solid #FF6FFF;
+    border-right: 9px solid #A700A8;
+    border-bottom: 9px solid #750073;
+    border-left: 9px solid #FF34FF;
+}
+
+.yellow-piece .innerGridCell {
+	background-color: #ffff01;
+	border-top: 9px solid #FFFF67;
+	border-right: 9px solid #A7A701;
+	border-bottom: 9px solid #747500;
+	border-left: 9px solid #ffff35;
+}
+
+.green-piece .innerGridCell {
+	background-color: #00ff01;
+	border-top: 9px solid #66FF67;
+	border-right: 9px solid #00A701;
+	border-bottom: 9px solid #007401;
+	border-left: 9px solid #34FF34;
+}
+
+.light-blue-piece .innerGridCell {
+	background-color: #01ffff;
+	border-top: 9px solid #67FFFF;
+	border-right: 9px solid #01A7A7;
+	border-bottom: 9px solid #007474;
+	border-left: 9px solid #34FEFE;
+}
 
 * { box-sizing: border-box }
 
@@ -32,7 +87,6 @@
 }
 
 .GridCell {
-	border: 1px solid #000;
 	flex: 1;
 }
 
@@ -57,4 +111,9 @@
 	width: 15vh;
 	height: 30vh;
 	display: flex;
+}
+
+.innerGridCell {
+    width: 100%;
+    height: 100%;
 }
