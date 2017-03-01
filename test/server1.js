@@ -1,7 +1,7 @@
 import chai from "chai"
 import {startServer, configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
-import {reqRefreshRooms, refreshRooms} from '../src/client/actions/index'
+import {reqRefreshRooms, refreshRooms, updateCreateRoomName, reqCreateRoom} from '../src/client/actions/index'
 import io from 'socket.io-client'
 import params from '../params'
 import {ROOM_LIST, PAYLOAD} from './redux1'
@@ -35,10 +35,7 @@ describe('server test', function(){
     const store =  configureStore(rootReducer, socket, initialState, {
       'RESP_CREATE_ROOM': () =>  done()
     })
-    store.dispatch({
-      type: 'REQ_CREATE_ROOM',
-      name: 'testname'
-    })
+    store.dispatch(reqCreateRoom())
   });
   it('should join a room', function(done){
     const initialState = {}
