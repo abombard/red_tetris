@@ -38,8 +38,6 @@ const placePiece = (x0, y0, grid, piece) => {
   let newGrid = copyArray(grid)
   let minmax = getMaxPiece(piece)
 
-  console.log(piece)
-  console.log(minmax)
       if (x0 + minmax.xmax >= newGrid.length || x0 + minmax.xmin < 0 || y0 + minmax.ymin < 0 || y0 + minmax.ymax >= newGrid[0].length)
   {
     return null
