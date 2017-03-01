@@ -49,15 +49,17 @@ describe('react test', function(){
     const output = renderer.getRenderOutput()
     output.should.equalJSX(
 
-      <li>
-        <a
-          href="#"
-          onClick={function noRefCheck() {}}
-        >
-          lle 2 / 4
-        </a>
+      <li className="list-group-item">
+      <a
+      href="#"
+      onClick={function noRefCheck() {}}
+      >
+      lle
+      </a>
+      <span className="badge">
+      2 / 4
+      </span>
       </li> 
-
 
     )
   })
@@ -66,9 +68,12 @@ describe('react test', function(){
     renderer.render(React.createElement(RoomItem, {name: 'lle',playerCount: 40,  maxPlayer: 4}))
     const output = renderer.getRenderOutput()
     output.should.equalJSX(
- <li>
-            {`lle 40 / 4`}
-          </li>
+       <li className="list-group-item">
+        lle
+        <span className="badge">
+          40 / 4
+        </span>
+      </li> 
 
 
     )
