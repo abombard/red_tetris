@@ -14,6 +14,7 @@ var Player = function(socket, name) {
   this.screenGrid = null
   this.room = null
   this.inGame = false
+  this.lost = 0
 
   this.updateScreen = () => {
 
@@ -84,6 +85,7 @@ var Player = function(socket, name) {
 
   this.initGame = (pieces) => {
     this.board = new Board(pieces)
+    this.lost = 0
     this.screenGrid = this.board.displayGrid
   }
 

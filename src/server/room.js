@@ -106,8 +106,10 @@ var Room = function(name) {
           }
 
           if (player.board.gameOver) {
+            player.lost = 1
             player.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: -1 } }) // this is not really used
             this.allPlayerBut(player, (enemy) => {
+              enemy.lost = -1
               enemy.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: 1 } })
             })
             this.endGame()
@@ -116,8 +118,8 @@ var Room = function(name) {
             player.updateScreen()
 
         }
-        else {
-            player.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: -2 } }) // this is not really used
+        else if (player.lost === 0) {
+            player.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: -2 } }) 
         }
       })
       this.loopCount = this.loopCount == 32 ? 0 : this.loopCount + 1
