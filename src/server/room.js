@@ -71,6 +71,7 @@ var Room = function(name) {
       player.inGame = true
     })
 
+    this.pieces = []
     for (let i = 0; i < 500; i ++) {
       this.pieces.push(new Piece(5, 0)) // i know i know
     }
