@@ -35,7 +35,7 @@ describe('server test', function(){
     const store =  configureStore(rootReducer, socket, initialState, {
       'RESP_CREATE_ROOM': () =>  done()
     })
-    store.dispatch(reqCreateRoom())
+    store.dispatch(reqCreateRoom({name: 'lala'}))
   });
   it('should join a room', function(done){
     const initialState = {}
