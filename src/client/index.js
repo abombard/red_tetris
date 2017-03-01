@@ -11,8 +11,6 @@ import tetrisMiddleware, { listen } from './middleware/redTetrisMiddleware'
 import reducer from './reducers'
 import inputHandler from './inputHandler'
 
-import './Game.css'
-
 import App from './components/App'
 import Lobby from './components/Lobby'
 import Room from './components/Room'
