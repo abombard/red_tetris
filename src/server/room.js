@@ -40,6 +40,7 @@ var Room = function(name) {
           this.ownerID = null
         }
       }
+      this.restart()
     }
   }
 
@@ -103,6 +104,7 @@ var Room = function(name) {
             player.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: -1 } }) // this is not really used
             this.allPlayerBut(player, (enemy) => {
               enemy.lost = -1
+              if (enemy.inGame === true)
               enemy.socket.emit('game', { type: 'BOARD_UPDATE', payload: { win: 1 } })
             })
             this.endGame()
