@@ -65,7 +65,9 @@
 
 * { box-sizing: border-box }
 
-.body { background-color: #000 }
+.body {
+	background-color: #000;
+}
 
 .game {
 	display: flex;
@@ -73,10 +75,10 @@
 
 .Grid {
 	border: 3px solid #fff;
-	width: 50vh;
+	width: 40vh;
 	display: flex;
-	height: 100vh;
-	margin: 5vh auto;
+	height: 80vh;
+	margin: auto;
 	flex-flow: row nowrap;
 }
 
@@ -91,7 +93,8 @@
 }
 
 .infoContainer {
-	margin: 5vh 0vh;
+	margin: 3vh 0vh;
+	margin-right: 20%;
 }
 
 .nextPieceContainer {

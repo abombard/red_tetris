@@ -44,6 +44,10 @@ var Player = function(socket, name) {
 
   this.socket.on('game', (data) => {
 
+    if (this.room === null) {
+      return
+    }
+
     switch (data.type) {
       case 'KEY_PRESS':
 

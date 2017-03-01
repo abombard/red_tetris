@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 import RoomItem from './RoomItem'
+import FontAwesome from 'react-fontawesome'
+import './RoomList.css'
 
 const onChangeHandler = (handler) => ((evt) => {
   handler(evt.target.value)
@@ -7,20 +9,26 @@ const onChangeHandler = (handler) => ((evt) => {
 
 const RoomList = ({ rooms, createName, onRefreshClick, onRoomClick, onCreateRoomChange, onCreateClick }) => (
   <div>
-    <input type='text' value={createName} onChange={onChangeHandler(onCreateRoomChange)} />
+    <input placeholder='name' type='text' value={createName} onChange={onChangeHandler(onCreateRoomChange)} />
     <button onClick={onCreateClick}>
       {'Create'}
-    </button>
-    <button onClick={onRefreshClick}>
-      {'Refresh'}
-    </button>
-    <ul>
-      {rooms.map(room =>
-       <RoomItem key = {room.name}
-         {...room}
-         onRoomClick = {onRoomClick}/>
-      )}
-    </ul>
+    </button> <br/>
+    <div>
+      <ul className='list-group'>
+        <li className='list-group-item active'>
+          Rooms
+          <FontAwesome
+            className='pull-right fa-lg refresh'
+            name='refresh'
+            onClick={onRefreshClick}/>
+        </li>
+        {rooms.map(room =>
+         <RoomItem key = {room.name}
+           {...room}
+           onRoomClick = {onRoomClick}/>
+        )}
+      </ul>
+    </div>
   </div>
 )
 

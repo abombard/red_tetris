@@ -84,8 +84,7 @@ var Room = function(name) {
     this.loopCount = 0
     this.gameLoop = () => {
       this.players.map((player) => {
-        if (player.inGame === true)
-        {
+        if (player.inGame === true) {
           if (this.loopCount == 32) { // 500 / 16 = 32
             player.board.move(0, 1)
           }
@@ -137,11 +136,7 @@ var Room = function(name) {
       if (player.inGame === true)
         ig = true
     })
-    if (ig === false)
-    {
-      this.players.map((player) => {
-        player.initGame(this.pieces)
-      })
+    if (ig === false) {
       this.startGame()
     }
   }
