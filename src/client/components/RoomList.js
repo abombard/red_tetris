@@ -8,7 +8,7 @@ const onChangeHandler = (handler) => ((evt) => {
 })
 
 const RoomList = ({ rooms, createName, onRefreshClick, onRoomClick, onCreateRoomChange, onCreateClick }) => (
-  <div>
+  <div className="roomlist">
     <input placeholder='name' type='text' value={createName} onChange={onChangeHandler(onCreateRoomChange)} />
     <button onClick={onCreateClick}>
       {'Create'}

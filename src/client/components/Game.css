@@ -83,6 +83,10 @@ body {
 	display: flex;
 }
 
+.roomlist {
+	height: auto;
+}
+
 .Grid {
 	display: flex;
 	height: 36em;
