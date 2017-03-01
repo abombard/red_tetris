@@ -11,9 +11,10 @@ export const updateCreateRoomName = (name) => {
   }
 }
 
-export const reqCreateRoom = () => {
+export const reqCreateRoom = (name) => {
   return {
     type: 'REQ_CREATE_ROOM',
+    name: name
   }
 }
 
