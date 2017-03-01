@@ -1,10 +1,14 @@
 import React from 'react'
-import './App.css'
 
 const App = ({children}) => (
-  <div className='app center-block'>
-    <h4>{'RED TETRIS'}</h4>
-    <div>
+  <div id='outerGameboy'>
+    <div id='innerGameboy'>
+      <div id="lightContainer">
+      	<div id="light"/>
+      	<div className="indicator"/>
+      	<div className="indicator"/>
+      	<div className="indicator"/>
+      </div>
       {children}
     </div>
   </div>

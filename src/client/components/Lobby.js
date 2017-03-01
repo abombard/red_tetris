@@ -2,7 +2,7 @@ import React from 'react'
 import RoomList from '../containers/RoomList'
 
 const Lobby = () => (
-  <div>
+  <div className="screen">
     <RoomList />
   </div>
 )

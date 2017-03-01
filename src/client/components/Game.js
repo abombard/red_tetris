@@ -25,15 +25,15 @@ const Game = ({ grid, nextPiece, shadow, win }) => {
   else {
     return (
       <div className='game'>
-      <Grid grid={grid} />
-      <div className='infoContainer'>
-      <div className='nextPieceContainer'>
-      <NextPiece nextPiece={nextPiece} />
-      </div>
-      <div className='shadowContainer'>
-      <Shadow shadow={shadow} />
-      </div>
-      </div>
+        <Grid grid={grid} />
+        <div className='infoContainer'>
+          <div className='nextPieceContainer'>
+            <NextPiece nextPiece={nextPiece} />
+          </div>
+          <div className='shadowContainer'>
+            <Shadow shadow={shadow} />
+          </div>
+        </div>
       </div>
     )
   }
