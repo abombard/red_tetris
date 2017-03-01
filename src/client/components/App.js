@@ -1,7 +1,8 @@
 import React from 'react'
+import './App.css'
 
 const App = ({children}) => (
-  <div>
+  <div className='app center-block'>
     <h4>{'RED TETRIS'}</h4>
     <div>
       {children}

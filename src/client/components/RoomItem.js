@@ -9,16 +9,18 @@ const RoomItem = ({ name, playerCount, onRoomClick, maxPlayer }) => {
   let link = playerCount < maxPlayer
   if (link) {
     return (
-      <li>
+      <li className='list-group-item'>
         <a href="#" onClick={handleClick}>
-          {`${name} ${playerCount.toString()} / ${maxPlayer}`}
+          {`${name}`}
         </a>
+        <span className='badge'>{`${playerCount.toString()} / ${maxPlayer}`}</span>
       </li>
     )
   }
   return (
-    <li>
-      {`${name} ${playerCount.toString()} / ${maxPlayer}`}
+    <li className='list-group-item'>
+      {`${name}`}
+      <span className='badge'>{`${playerCount.toString()} / ${maxPlayer}`}</span>
     </li>
   )
 }
