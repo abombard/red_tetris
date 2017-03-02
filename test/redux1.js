@@ -1,7 +1,7 @@
 import {configureStore} from './helpers/server'
 import rootReducer from '../src/client/reducers'
 import {GET_MAP, getMap} from '../src/client/actions/getMap'
-import {REQ_REFRESH_ROOMS, REFRESH_ROOMS, reqRefreshRooms, refreshRooms} from '../src/client/actions/index'
+import {REQ_REFRESH_ROOMS, REFRESH_ROOMS, reqRefreshRooms, refreshRooms, reqCreateRoom, updateCreateRoomName} from '../src/client/actions/index'
 import chai from "chai"
 
 const GRID = [ [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -69,6 +69,35 @@ describe('retrieve room list', function(){
       }
     })
     store.dispatch(refreshRooms(ROOM_LIST))
+  });
+
+});
+
+describe('retrieve room list', function(){
+  it('should create a room', function(done){
+    const initialState = {}
+    const store =  configureStore(rootReducer, null, initialState, {
+      'REQ_CREATE_ROOM': ({dispatch, getState}) =>  {
+        const state = getState()
+        state.lobby.rooms.should.empty
+        done()
+      }
+    })
+    store.dispatch(reqCreateRoom('lalalv'))
+  });
+
+});
+describe('retrieve room list', function(){
+  it('should create a room', function(done){
+    const initialState = {}
+    const store =  configureStore(rootReducer, null, initialState, {
+      'UPDATE_CREATE_ROOM_NAME': ({dispatch, getState}) =>  {
+        const state = getState()
+        state.lobby.rooms.should.empty
+        done()
+      }
+    })
+    store.dispatch(updateCreateRoomName('lalalv'))
   });
 
 });
