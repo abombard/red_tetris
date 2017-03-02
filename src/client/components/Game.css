@@ -9,10 +9,19 @@ body {
 	margin: 0;
 }
 
+#tetris {
+	margin: auto;
+    background-color: #1e0f3c;
+}
+
 #outerGameboy {
 	background-color: #4c2d8a;
-	width: 100%;
+	width: 75em;
 	height: 100%;
+	border-top-left-radius: 2%;
+	border-top-right-radius: 2%;
+    border: 3px solid rgba(0, 0, 0, 0.36);
+    margin: auto;
 }
 
 #innerGameboy {
@@ -159,6 +168,7 @@ body {
 .yellow-piece { background-color: #FFFF01; } /* T */
 .green-piece { background-color: #00FF01; } /* I */
 .light-blue-piece { background-color: #01FFFF; } /* carré */
+.grey { background-color: #999; } /* carré */
 
 .orange-piece .innerGridCell {
 	background-color: #FF7D01;
