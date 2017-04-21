@@ -18,7 +18,7 @@ var Player = function(socket, name) {
 
   this.updateScreen = () => {
 
-    if (this.screenGrid == this.board.displayGrid) {
+    if (this.screenGrid === this.board.displayGrid) {
       return
     }
 

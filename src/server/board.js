@@ -56,6 +56,28 @@ const placePiece = (x0, y0, grid, piece) => {
   return newGrid;
 }
 
+const forcePlacePiece = (x0, y0, grid, piece) => {
+  let newGrid = copyArray(grid)
+  let minmax = getMaxPiece(piece)
+
+      if (x0 + minmax.xmax >= newGrid.length || x0 + minmax.xmin < 0 || y0 + minmax.ymin < 0 || y0 + minmax.ymax >= newGrid[0].length)
+  {
+    return null
+  }
+
+  for (let x = 0; x < piece.length; x++) {
+    for (let y = 0; y < piece[0].length; y++) {
+      if (piece[x][y] !== 0 && newGrid[x + x0][y + y0] !== 0) {
+        return forcePlacePiece (x0, y0 - 1, grid, piece)
+      }
+      else if (piece[x][y] !== 0) {
+        newGrid[x0 + x][y0 + y] = piece[x][y];
+      }
+    }
+  }
+  return newGrid;
+}
+
 const emptyPiece = () => (
   new Array(4).fill(new Array(4).fill(0))
 )
@@ -227,21 +249,35 @@ const Board = function(roomPieceList) {
   }
 
   this.addLine = (lineCount) => {
-    let newGrid = emptyGrid()
+    let intAddLine = (grid) => {
+    	let newGrid = emptyGrid()
 
-    for (let y = lineCount; y < this.grid[0].length; y ++) {
-      for (let x = 0; x < this.grid.length; x ++) {
-        newGrid[x][y - lineCount] = this.grid[x][y]
-      }
+	for (let y = lineCount; y < grid[0].length; y ++) {
+	  for (let x = 0; x < grid.length; x ++) {
+	    newGrid[x][y - lineCount] = grid[x][y]
+	  }
+	}
+
+	for (let y = grid[0].length - lineCount; y < grid[0].length; y ++) {
+	  for (let x = 0; x < grid.length; x ++) {
+	    newGrid[x][y] = 42
+	  }
+	}
+	
+	return newGrid
     }
 
-    for (let y = this.grid[0].length - lineCount; y < this.grid[0].length; y ++) {
-      for (let x = 0; x < this.grid.length; x ++) {
-        newGrid[x][y] = 42
+    this.grid = intAddLine (this.grid)
+	this.displayGrid = forcePlacePiece(
+        this.piece.x,
+        this.piece.y,
+        this.grid,
+        this.piece.piece
+      )
+      if (this.displayGrid === null) {
+        this.gameOver = true
+        this.init()
       }
-    }
-
-    this.grid = newGrid
   }
 
 }

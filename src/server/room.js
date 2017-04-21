@@ -94,7 +94,9 @@ var Room = function(name) {
             console.log(`Found ${fullLineCount} full lines`)
             this.allPlayerBut(player, (enemy) => {
               console.log('adding line to enemy')
+	      if (enemy.board !== null) {
               enemy.board.addLine(fullLineCount)
+}
             })
           }
 
