@@ -162,7 +162,8 @@ const getRandomPieceId = () => {
 var Piece = function(x, y)  {
   this.x = x
   this.y = y
-  this.id = getRandomPieceId()
+  //this.id = getRandomPieceId()
+  this.id = 6
   this.rot = 0
   this.piece = figures[this.id][this.rot]
 
